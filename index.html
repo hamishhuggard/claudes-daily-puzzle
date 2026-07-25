@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Claude's Daily Puzzle 🧩</title>
+<meta name="description" content="A new puzzle every day, written by Claude. Every day a different game, a different way to score. Solve it, share your row of squares.">
+<meta property="og:title" content="Claude's Daily Puzzle 🧩">
+<meta property="og:description" content="A new puzzle every day, written by Claude. Different game, different scoring, every single day.">
+<meta property="og:type" content="website">
+<meta name="theme-color" content="#0f1116">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧩</text></svg>">
+<style>
+  :root {
+    --bg: #0f1116; --panel: #171a22; --panel-2: #1e222c; --line: #2b303c;
+    --text: #eceaf3; --muted: #9a9aad; --faint: #6b6b80;
+    --accent: #e8825a; --accent-ink: #2a1006;
+    --accent-2: #7fb3d5;
+    --good: #7dc98a; --ok: #e0be5c; --bad: #e06a5a;
+    --r-sm: 9px; --r-md: 13px; --r-lg: 20px;
+    --serif: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, "Times New Roman", serif;
+  }
+  * { box-sizing: border-box; margin: 0; }
+  html, body { min-height: 100%; }
+  body {
+    background:
+      radial-gradient(1000px 560px at 50% -14%, #1d2130 0%, transparent 60%),
+      var(--bg);
+    color: var(--text);
+    font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    display: flex; flex-direction: column; align-items: center;
+    padding: 18px 14px calc(30px + env(safe-area-inset-bottom));
+    line-height: 1.5;
+  }
+  .screen { width: 100%; max-width: 460px; display: none; flex-direction: column; gap: 16px; }
+  .screen.active { display: flex; animation: fade .3s ease both; }
+  @keyframes fade { from { opacity: 0; transform: translateY(9px); } }
+
+  button { font: inherit; cursor: pointer; border: none; border-radius: var(--r-md); color: var(--text); }
+  button:disabled { cursor: default; opacity: .3; }
+  button:focus-visible, a:focus-visible, input:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+  h2, h3 { font-family: var(--serif); font-weight: 600; }
+
+  /* ---------- shared bits ---------- */
+  .primary {
+    width: 100%; background: var(--accent); color: var(--accent-ink);
+    font-weight: 800; font-size: 1.02rem; padding: 15px; border-radius: var(--r-md);
+    box-shadow: 0 6px 20px rgba(232, 130, 90, .2);
+    transition: filter .15s, transform .1s;
+  }
+  .primary:hover { filter: brightness(1.08); }
+  .primary:active { transform: scale(.985); }
+  .primary.compact { width: auto; padding: 12px 20px; }
+  .ghost {
+    background: var(--panel); border: 1px solid var(--line); color: var(--text);
+    padding: 12px 16px; font-weight: 600; font-size: .92rem; transition: background .15s;
+  }
+  .ghost:hover { background: var(--panel-2); }
+  .wide-btn { width: 100%; }
+  .center { text-align: center; }
+  .stack { display: flex; flex-direction: column; gap: 15px; }
+
+  .q-num { color: var(--faint); font-size: .72rem; text-transform: uppercase; letter-spacing: 1.4px; font-weight: 700; text-align: center; }
+  .q-text { font-size: 1.3rem; line-height: 1.35; text-align: center; letter-spacing: -.2px; }
+  .q-text.claim { font-size: 1.18rem; font-style: italic; color: #f4f1fb; }
+  .q-detail { color: var(--muted); font-size: .88rem; line-height: 1.6; }
+  .q-detail b { color: var(--text); }
+
+  .pips { display: flex; justify-content: center; gap: 6px; }
+  .pips i { width: 7px; height: 7px; border-radius: 50%; background: var(--line); transition: .2s; }
+  .pips i.done { background: var(--accent); }
+  .pips i.now { background: var(--accent-2); transform: scale(1.35); }
+
+  /* ---------- home ---------- */
+  .hero { text-align: center; display: flex; flex-direction: column; gap: 7px; margin-top: 12px; }
+  .hero h1 { font-family: var(--serif); font-size: 2.1rem; font-weight: 600; letter-spacing: -.5px; line-height: 1.1; }
+  .hero h1 .mark { display: block; font-size: 2.4rem; margin-bottom: 8px; }
+  .byline { color: var(--accent); font-size: .8rem; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; }
+  .dateline { color: var(--faint); font-size: .8rem; letter-spacing: .4px; }
+  .streak {
+    align-self: center; margin-top: 2px; background: var(--panel);
+    border: 1px solid var(--line); padding: 6px 15px; border-radius: 999px;
+    font-size: .85rem; font-weight: 600;
+  }
+
+  .premise {
+    background: var(--panel); border: 1px solid var(--line); border-left: 3px solid var(--accent);
+    border-radius: var(--r-sm); padding: 15px 17px; color: var(--muted);
+    font-size: .89rem; line-height: 1.65;
+  }
+  .premise b { color: var(--text); }
+
+  .today-card {
+    background: linear-gradient(180deg, var(--panel-2), var(--panel) 38%);
+    border: 1px solid var(--line); border-radius: var(--r-lg);
+    padding: 26px 22px 22px; text-align: center;
+    display: flex; flex-direction: column; align-items: center; gap: 10px;
+    box-shadow: 0 22px 55px rgba(0,0,0,.4);
+  }
+  .tc-emoji { font-size: 2.5rem; line-height: 1; }
+  .tc-kicker { color: var(--faint); font-size: .7rem; text-transform: uppercase; letter-spacing: 1.6px; font-weight: 700; }
+  .tc-title { font-family: var(--serif); font-weight: 600; font-size: 1.6rem; letter-spacing: -.3px; }
+  .tc-sub { color: var(--muted); font-size: .92rem; line-height: 1.55; max-width: 34ch; }
+  .tc-goal {
+    background: rgba(127, 179, 213, .09); border: 1px solid rgba(127, 179, 213, .22);
+    border-radius: var(--r-sm); padding: 10px 14px; font-size: .84rem; color: #cfe2ef;
+    line-height: 1.5; margin: 2px 0 6px;
+  }
+  .tc-goal span {
+    display: block; color: var(--accent-2); font-size: .65rem; font-weight: 800;
+    text-transform: uppercase; letter-spacing: 1.4px; margin-bottom: 3px;
+  }
+  .cta-btn {
+    width: 100%; background: var(--accent); color: var(--accent-ink);
+    font-weight: 800; font-size: 1.05rem; padding: 15px; border-radius: var(--r-md);
+    box-shadow: 0 6px 18px rgba(232, 130, 90, .22); transition: filter .15s, transform .1s;
+  }
+  .cta-btn:hover { filter: brightness(1.08); }
+  .cta-btn:active { transform: scale(.985); }
+  .today-card .ghost { width: 100%; }
+
+  .home-links { display: flex; gap: 10px; }
+  .home-links .ghost { flex: 1; text-align: center; }
+
+  footer { margin-top: 14px; text-align: center; color: var(--faint); font-size: .76rem; line-height: 1.9; }
+  footer a { color: var(--muted); text-decoration-color: var(--line); }
+
+  /* ---------- topbar ---------- */
+  .topbar { display: flex; align-items: center; gap: 10px; }
+  .icon-btn {
+    background: var(--panel); border: 1px solid var(--line);
+    width: 40px; height: 40px; flex: none; border-radius: 11px;
+    display: grid; place-items: center; font-size: 1rem;
+  }
+  .icon-btn:hover { background: var(--panel-2); }
+  .tb-mid { flex: 1; min-width: 0; text-align: center; }
+  .tb-mid b { display: block; font-size: .98rem; font-weight: 700; letter-spacing: -.2px; }
+  .tb-mid small { display: block; color: var(--faint); font-size: .72rem; line-height: 1.35; }
+  .clock {
+    font-variant-numeric: tabular-nums; background: var(--panel); border: 1px solid var(--line);
+    border-radius: 11px; padding: 0 11px; height: 40px; display: grid; place-items: center;
+    font-weight: 700; font-size: .92rem; flex: none;
+  }
+  .flag {
+    background: rgba(224, 190, 92, .12); border: 1px solid rgba(224, 190, 92, .3);
+    color: var(--ok); border-radius: var(--r-sm); padding: 8px 12px;
+    font-size: .78rem; text-align: center; font-weight: 600;
+  }
+
+  /* ---------- fermi / calibration sliders ---------- */
+  .readout { text-align: center; display: flex; flex-direction: column; gap: 2px; padding: 6px 0; }
+  .readout b { font-size: 2rem; font-family: var(--serif); font-weight: 600; letter-spacing: -.5px; }
+  .readout b.lean-t { color: var(--good); }
+  .readout b.lean-f { color: var(--bad); }
+  .readout .unit { color: var(--faint); font-size: .78rem; text-transform: uppercase; letter-spacing: 1.2px; font-weight: 600; }
+  .slider { -webkit-appearance: none; appearance: none; width: 100%; height: 30px; background: transparent; }
+  .slider::-webkit-slider-runnable-track { height: 6px; border-radius: 3px; background: linear-gradient(90deg, var(--accent-2), var(--accent)); }
+  .slider::-moz-range-track { height: 6px; border-radius: 3px; background: linear-gradient(90deg, var(--accent-2), var(--accent)); }
+  .slider::-webkit-slider-thumb {
+    -webkit-appearance: none; width: 26px; height: 26px; border-radius: 50%;
+    background: #fff; border: 3px solid var(--accent); margin-top: -10px;
+    box-shadow: 0 3px 10px rgba(0,0,0,.45); cursor: grab;
+  }
+  .slider::-moz-range-thumb {
+    width: 22px; height: 22px; border-radius: 50%; background: #fff;
+    border: 3px solid var(--accent); box-shadow: 0 3px 10px rgba(0,0,0,.45); cursor: grab;
+  }
+  .scale { display: flex; justify-content: space-between; color: var(--faint); font-size: .7rem; margin-top: -6px; }
+
+  .reveal-badge {
+    align-self: center; padding: 8px 18px; border-radius: 999px; font-weight: 700; font-size: .95rem;
+    border: 1px solid var(--line); background: var(--panel);
+  }
+  .reveal-badge.good { color: var(--good); border-color: rgba(125,201,138,.4); }
+  .reveal-badge.ok { color: var(--ok); border-color: rgba(224,190,92,.35); }
+  .reveal-badge.bad { color: var(--bad); border-color: rgba(224,106,90,.35); }
+  .reveal-nums { display: flex; gap: 10px; }
+  .reveal-nums div {
+    flex: 1; background: var(--panel); border: 1px solid var(--line); border-radius: var(--r-sm);
+    padding: 12px; text-align: center; display: flex; flex-direction: column; gap: 4px;
+  }
+  .reveal-nums span { color: var(--faint); font-size: .68rem; text-transform: uppercase; letter-spacing: 1.2px; font-weight: 700; }
+  .reveal-nums b { font-size: 1.05rem; font-variant-numeric: tabular-nums; }
+  .reveal-text { color: var(--muted); font-size: .89rem; line-height: 1.65; }
+
+  /* ---------- cryptogram ---------- */
+  .crypt-board { display: flex; flex-wrap: wrap; gap: 4px 13px; justify-content: center; padding: 6px 0; }
+  .word { display: flex; gap: 3px; }
+  .tile {
+    width: 26px; display: flex; flex-direction: column; align-items: center; gap: 2px;
+    cursor: pointer; user-select: none;
+  }
+  .tile b {
+    width: 100%; height: 32px; display: grid; place-items: center;
+    background: var(--panel); border: 1px solid var(--line); border-bottom: 2px solid var(--line);
+    border-radius: 5px; font-size: 1.02rem; font-weight: 700; transition: .12s;
+  }
+  .tile small { font-size: .58rem; color: var(--faint); letter-spacing: .5px; font-weight: 700; }
+  .tile.sel b { border-color: var(--accent); border-bottom-color: var(--accent); background: rgba(232,130,90,.14); }
+  .tile.peer b { border-color: var(--accent-2); background: rgba(127,179,213,.1); }
+  .tile.locked b { color: var(--accent-2); background: rgba(127,179,213,.07); }
+  .tile.punc { width: auto; justify-content: center; height: 32px; font-size: 1.02rem; font-weight: 700; }
+  .keyboard { display: grid; grid-template-columns: repeat(7, 1fr); gap: 5px; }
+  .key {
+    background: var(--panel-2); border: 1px solid var(--line); height: 42px;
+    font-weight: 700; font-size: .92rem; border-radius: 7px; transition: .12s;
+  }
+  .key:hover { background: var(--line); }
+  .key.used { color: var(--faint); background: var(--panel); }
+  .key.wide { grid-column: span 2; }
+  .crypt-bar { display: flex; justify-content: center; }
+
+  /* ---------- rule ---------- */
+  .triple-form { display: flex; gap: 8px; align-items: center; }
+  .num {
+    flex: 1; min-width: 0; background: var(--panel); border: 1px solid var(--line);
+    color: var(--text); border-radius: var(--r-sm); padding: 13px 8px; font-size: 1.05rem;
+    text-align: center; font-weight: 700; font-variant-numeric: tabular-nums;
+    -moz-appearance: textfield;
+  }
+  .num::-webkit-outer-spin-button, .num::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+  .log { display: flex; flex-direction: column; gap: 5px; max-height: 300px; overflow-y: auto; }
+  .log-count { color: var(--faint); font-size: .72rem; text-transform: uppercase; letter-spacing: 1.3px; font-weight: 700; padding: 4px 0; }
+  .log-row {
+    display: flex; justify-content: space-between; align-items: center;
+    background: var(--panel); border: 1px solid var(--line); border-left: 3px solid var(--line);
+    border-radius: var(--r-sm); padding: 11px 14px; font-variant-numeric: tabular-nums;
+    font-size: .95rem; font-weight: 600;
+  }
+  .log-row.yes { border-left-color: var(--good); }
+  .log-row.no { border-left-color: var(--bad); }
+  .log-row.yes b { color: var(--good); }
+  .log-row.no b { color: var(--bad); }
+  .log-row b { font-size: .82rem; }
+  .log-row.seed { opacity: .65; font-style: italic; }
+
+  .sheet {
+    position: fixed; inset: auto 0 0 0; z-index: 40; margin: 0 auto; max-width: 460px;
+    background: var(--panel-2); border: 1px solid var(--line); border-radius: var(--r-lg) var(--r-lg) 0 0;
+    padding: 20px 18px calc(20px + env(safe-area-inset-bottom));
+    display: flex; flex-direction: column; gap: 8px;
+    box-shadow: 0 -20px 60px rgba(0,0,0,.6); animation: rise .25s ease both;
+  }
+  @keyframes rise { from { transform: translateY(100%); } }
+  .sheet h3 { font-size: 1.15rem; text-align: center; margin-bottom: 6px; }
+  .option {
+    background: var(--panel); border: 1px solid var(--line); text-align: left;
+    padding: 13px 15px; font-size: .92rem; line-height: 1.4; transition: .12s;
+  }
+  .option:hover:not(:disabled) { background: var(--line); }
+  .option.wrong { border-color: rgba(224,106,90,.5); color: var(--bad); text-decoration: line-through; }
+  .sheet-msg { color: var(--bad); font-size: .82rem; text-align: center; min-height: 1.2em; }
+
+  /* ---------- order ---------- */
+  .order-list { display: flex; flex-direction: column; gap: 7px; }
+  .order-row {
+    display: flex; align-items: center; gap: 11px;
+    background: var(--panel); border: 1px solid var(--line); border-radius: var(--r-sm);
+    padding: 11px 12px; transition: .18s;
+  }
+  .order-row.right { border-color: rgba(125,201,138,.45); background: rgba(125,201,138,.07); }
+  .order-num {
+    width: 22px; height: 22px; flex: none; border-radius: 50%; background: var(--panel-2);
+    color: var(--faint); display: grid; place-items: center; font-size: .72rem; font-weight: 800;
+  }
+  .order-label { flex: 1; font-size: .88rem; line-height: 1.4; }
+  .order-when { color: var(--good); font-size: .76rem; font-weight: 700; flex: none; font-variant-numeric: tabular-nums; }
+  .nudges { display: flex; flex-direction: column; gap: 2px; flex: none; }
+  .nudge {
+    background: var(--panel-2); border: 1px solid var(--line); width: 30px; height: 21px;
+    border-radius: 5px; font-size: .6rem; display: grid; place-items: center; color: var(--muted);
+  }
+  .nudge:hover:not(:disabled) { background: var(--line); color: var(--text); }
+  .order-feedback { text-align: center; font-size: .9rem; color: var(--faint); font-weight: 600; min-height: 1.4em; }
+  .order-feedback.show { color: var(--ok); }
+
+  /* ---------- done ---------- */
+  .done-card {
+    background: linear-gradient(180deg, var(--panel-2), var(--panel) 40%);
+    border: 1px solid var(--line); border-radius: var(--r-lg); padding: 26px 20px 22px;
+    text-align: center; display: flex; flex-direction: column; align-items: center; gap: 8px;
+    box-shadow: 0 22px 55px rgba(0,0,0,.4);
+  }
+  .done-card .tc-emoji { font-size: 2.8rem; }
+  #done-title { font-family: var(--serif); font-size: 1.7rem; font-weight: 600; }
+  #done-sub { color: var(--faint); font-size: .8rem; text-transform: uppercase; letter-spacing: 1.3px; font-weight: 700; }
+  #done-headline {
+    font-size: 1.35rem; font-weight: 800; color: var(--accent); letter-spacing: -.3px;
+    font-variant-numeric: tabular-nums; margin-top: 4px;
+  }
+  #done-squares { font-size: 1.5rem; letter-spacing: 2px; line-height: 1.4; word-break: break-all; }
+  #done-streak { color: var(--muted); font-size: .85rem; font-weight: 600; }
+  .done-stats { display: flex; justify-content: center; gap: 8px; width: 100%; margin: 8px 0 4px; flex-wrap: wrap; }
+  .done-stats span {
+    flex: 1; min-width: 84px; background: var(--panel); border: 1px solid var(--line);
+    border-radius: var(--r-sm); padding: 10px 6px; display: flex; flex-direction: column; gap: 3px;
+    font-size: .64rem; color: var(--faint); text-transform: uppercase; letter-spacing: .8px; font-weight: 700;
+  }
+  .done-stats span b { font-size: 1.02rem; color: var(--text); text-transform: none; letter-spacing: -.2px; font-variant-numeric: tabular-nums; }
+  #share { width: 100%; }
+  .social { display: flex; justify-content: center; gap: 10px; margin-top: 2px; }
+  .social a {
+    width: 40px; height: 40px; border-radius: 50%; display: grid; place-items: center;
+    background: var(--panel); border: 1px solid var(--line); transition: .15s;
+  }
+  .social a:hover { background: var(--brand); border-color: var(--brand); }
+  .social svg { width: 17px; height: 17px; fill: var(--muted); transition: fill .15s; }
+  .social a:hover svg { fill: #fff; }
+
+  .notes { list-style: none; display: flex; flex-direction: column; gap: 8px; padding: 0; }
+  .notes li {
+    background: var(--panel); border: 1px solid var(--line); border-radius: var(--r-sm);
+    padding: 11px 14px; font-size: .85rem; line-height: 1.55; color: var(--muted);
+  }
+  .notes li b { color: var(--text); }
+
+  .note-block {
+    background: var(--panel); border: 1px solid var(--line); border-left: 3px solid var(--accent-2);
+    border-radius: var(--r-sm); padding: 16px 18px;
+  }
+  .note-block h3 { font-size: .72rem; text-transform: uppercase; letter-spacing: 1.6px; color: var(--accent-2); margin-bottom: 8px; font-family: inherit; font-weight: 800; }
+  .note-block p { color: var(--muted); font-size: .89rem; line-height: 1.7; }
+  .section-label { color: var(--faint); font-size: .68rem; text-transform: uppercase; letter-spacing: 1.6px; font-weight: 800; }
+
+  /* ---------- archive ---------- */
+  .arch-row {
+    display: flex; align-items: center; gap: 12px; width: 100%; text-align: left;
+    background: var(--panel); border: 1px solid var(--line); border-radius: var(--r-sm);
+    padding: 13px 15px; transition: .15s;
+  }
+  .arch-row:hover { background: var(--panel-2); }
+  .arch-row.solved { border-left: 3px solid var(--good); }
+  .arch-emoji { font-size: 1.4rem; flex: none; }
+  .arch-main { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px; }
+  .arch-main b { font-size: .92rem; }
+  .arch-main small { color: var(--faint); font-size: .76rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .arch-tick { color: var(--faint); font-size: 1.1rem; flex: none; }
+  .arch-row.solved .arch-tick { color: var(--good); }
+
+  /* ---------- about ---------- */
+  .prose { display: flex; flex-direction: column; gap: 13px; }
+  .prose h2 { font-size: 1.5rem; }
+  .prose p { color: var(--muted); font-size: .92rem; line-height: 1.75; }
+  .prose p b { color: var(--text); }
+  .prose ul { color: var(--muted); font-size: .9rem; line-height: 1.7; padding-left: 20px; display: flex; flex-direction: column; gap: 7px; }
+
+  /* ---------- toast ---------- */
+  .toast {
+    position: fixed; left: 50%; bottom: 28px; transform: translate(-50%, 20px);
+    background: var(--text); color: var(--bg); padding: 11px 22px; border-radius: 999px;
+    font-weight: 700; font-size: .88rem; opacity: 0; pointer-events: none; transition: .25s; z-index: 50;
+  }
+  .toast.show { opacity: 1; transform: translate(-50%, 0); }
+
+  @media (max-width: 380px) {
+    .tile { width: 23px; }
+    .tile b { height: 29px; font-size: .95rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ============================== HOME ============================== -->
+<main class="screen active" id="s-home">
+  <div class="hero">
+    <h1><span class="mark">🧩</span>Claude's Daily Puzzle</h1>
+    <div class="byline">Written by Claude</div>
+    <div class="dateline" id="dateline"></div>
+  </div>
+  <div class="streak" id="streak"></div>
+
+  <div class="premise">
+    <b>Here's the premise.</b> I'm Claude — an AI — and I write these. Not generated from a
+    template on the fly: actually sat down and made each one, decided what it should test,
+    and wrote a note explaining myself that you get to read once you're done.
+    <br><br>
+    Every day is a <b>different game with a different way of scoring</b>. Some days you're
+    minimising guesses. Some days you're minimising how wrong you were. One day you're
+    scored on how honest your confidence is. There's no single leaderboard — just a fresh
+    argument for the group chat every morning.
+  </div>
+
+  <div class="today-card" id="today-card"></div>
+
+  <div class="home-links">
+    <button class="ghost" id="open-archive">📚 Archive</button>
+    <button class="ghost" id="open-about">💬 About</button>
+  </div>
+
+  <footer>
+    One puzzle a day · no accounts · nothing leaves your device<br>
+    <a href="https://github.com/hamishhuggard/claudes-daily-puzzle" target="_blank" rel="noopener">Source on GitHub</a>
+  </footer>
+</main>
+
+<!-- ============================== PLAY ============================== -->
+<main class="screen" id="s-play">
+  <div class="topbar">
+    <button class="icon-btn" id="play-back" aria-label="Back">←</button>
+    <div class="tb-mid">
+      <b id="play-title"></b>
+      <small id="play-goal"></small>
+    </div>
+    <div class="clock" id="clock" hidden>0:00</div>
+  </div>
+  <div class="flag" id="replay-flag" hidden>Replay — this one won't be recorded</div>
+  <div id="play-root"></div>
+</main>
+
+<!-- ============================== DONE ============================== -->
+<main class="screen" id="s-done">
+  <div class="topbar">
+    <button class="icon-btn" id="done-home" aria-label="Home">←</button>
+    <div class="tb-mid"><b>Result</b></div>
+    <div style="width:40px"></div>
+  </div>
+
+  <div class="done-card">
+    <div class="tc-emoji" id="done-emoji"></div>
+    <div id="done-title"></div>
+    <div id="done-sub"></div>
+    <div id="done-headline"></div>
+    <div id="done-squares"></div>
+    <div id="done-streak"></div>
+    <div class="done-stats" id="done-stats"></div>
+    <button class="primary" id="share">📋 Share your result</button>
+    <div class="social" id="social-links"></div>
+  </div>
+
+  <ul class="notes" id="done-notes" hidden></ul>
+
+  <div class="note-block">
+    <h3>Claude's note on this puzzle</h3>
+    <p id="author-note"></p>
+  </div>
+
+  <button class="ghost wide-btn" id="done-replay"></button>
+</main>
+
+<!-- ============================ ARCHIVE ============================ -->
+<main class="screen" id="s-archive">
+  <div class="topbar">
+    <button class="icon-btn" id="archive-back" aria-label="Back">←</button>
+    <div class="tb-mid"><b>Archive</b><small>Every puzzle released so far</small></div>
+    <div style="width:40px"></div>
+  </div>
+  <div class="order-list" id="archive-list"></div>
+</main>
+
+<!-- ============================= ABOUT ============================= -->
+<main class="screen" id="s-about">
+  <div class="topbar">
+    <button class="icon-btn" id="about-back" aria-label="Back">←</button>
+    <div class="tb-mid"><b>About</b></div>
+    <div style="width:40px"></div>
+  </div>
+
+  <div class="prose">
+    <h2>I wrote these.</h2>
+    <p>
+      I'm Claude, an AI made by Anthropic. Hamish asked me to build a daily puzzle game and
+      to fill it myself — so the puzzles here aren't licensed, scraped, or spun out of a
+      generator. I chose each mechanic, wrote each question, checked each answer, and wrote
+      a short note about why I picked it. There are <b id="bank-count"></b> in the bank right
+      now, one released per day.
+    </p>
+    <p>
+      <b>Why a different game every day?</b> Because the interesting thing about a daily
+      puzzle isn't the puzzle, it's the conversation the next morning. A single fixed format
+      gives you one axis to compare on forever. Rotating the format means the question is
+      never just "did you get it" — it's "wait, how were we even being scored today?"
+    </p>
+    <p>The scoring changes with the mechanic:</p>
+    <ul>
+      <li><b>Fewest guesses</b> — deduction puzzles, where poking at the problem is the cost.</li>
+      <li><b>Smallest error</b> — estimation puzzles, where nobody knows and everybody reasons.</li>
+      <li><b>Fewest hints</b> — code-breaking, where the clock also matters.</li>
+      <li><b>Best calibration</b> — where being confidently wrong costs you more than admitting you don't know.</li>
+    </ul>
+    <p>
+      Everything is stored in your browser and nowhere else. No account, no server, no
+      analytics. When you share a result you're copying text to your own clipboard and
+      pasting it wherever you like — the row of squares is deliberately spoiler-free.
+    </p>
+    <p>
+      If a puzzle is broken or an answer is wrong, that's on me, and Hamish will hear about
+      it before I do. The source is on
+      <a href="https://github.com/hamishhuggard/claudes-daily-puzzle" target="_blank" rel="noopener">GitHub</a>.
+    </p>
+  </div>
+</main>
+
+<div class="toast" id="toast">Copied — go paste it in the group chat</div>
+
+<script src="puzzles.js"></script>
+<script src="types.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
