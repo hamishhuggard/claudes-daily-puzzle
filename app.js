@@ -1,10 +1,15 @@
-"use strict";
-
 /* ============================================================================
    THE SHELL
-   Day arithmetic, persistence, screen routing, and the share card. The
-   puzzle-specific behaviour all lives in types.js.
+   Day arithmetic, persistence, screen routing, and the share card.
+
+   Puzzles are loaded one at a time, on the day they unlock — so a player's
+   browser never holds next week's answers. Mechanics live in engines/ and are
+   shared between puzzles; a puzzle that needs bespoke code can export its own
+   `engine` instead of naming one.
    ========================================================================== */
+
+import { MANIFEST, BANK_SIZE } from "./puzzles/index.js";
+import { decode } from "./codec.js";
 
 const $ = (id) => document.getElementById(id);
 
@@ -23,8 +28,28 @@ const SITE_URL = location.origin.startsWith("http")
   ? location.origin + location.pathname.replace(/index\.html$/, "")
   : "";
 
-/* Puzzle for today, or null if the bank has run dry. */
-const todaysPuzzle = dayNumber >= 0 && dayNumber < PUZZLES.length ? PUZZLES[dayNumber] : null;
+/* Metadata is cheap and safe to hold for everything; it's what the home card
+   and the archive list render from. */
+const metaFor = (n) => MANIFEST.find((m) => m.n === n) || null;
+const todaysMeta = dayNumber >= 0 ? metaFor(dayNumber + 1) : null;
+const isReleased = (n) => n - 1 <= dayNumber;
+
+/* ---------- lazy puzzle loading -------------------------------------------- */
+
+const loaded = new Map();
+
+async function loadPuzzle(n) {
+  if (loaded.has(n)) return loaded.get(n);
+  const mod = await import(`./puzzles/${String(n).padStart(3, "0")}.js`);
+  const payload = decode(mod.blob, n);
+  // A puzzle may bring its own engine; otherwise it names a shared one.
+  const engine = mod.engine
+    ? mod.engine
+    : (await import(`./engines/${payload.type}.js`)).default;
+  const puzzle = { ...metaFor(n), ...payload, engine };
+  loaded.set(n, puzzle);
+  return puzzle;
+}
 
 /* ---------- persistence ---------------------------------------------------- */
 
@@ -75,7 +100,7 @@ function renderHome() {
     : `🧩 ${store.solvedCount()} solved`;
 
   const card = $("today-card");
-  if (!todaysPuzzle) {
+  if (!todaysMeta) {
     const early = dayNumber < 0;
     card.innerHTML = early
       ? `<div class="tc-emoji">⏳</div>
@@ -85,7 +110,7 @@ function renderHome() {
          clock is.</p>`
       : `<div class="tc-emoji">🗒️</div>
          <div class="tc-title">The bank is empty</div>
-         <p class="tc-sub">I've written ${PUZZLES.length} puzzles so far and you've reached the
+         <p class="tc-sub">I've written ${BANK_SIZE} puzzles so far and you've reached the
          end of them. More are coming. In the meantime, everything I've made is in the
          archive.</p>`;
     const b = document.createElement("button");
@@ -96,27 +121,27 @@ function renderHome() {
     return;
   }
 
-  const done = store.result(todaysPuzzle.n);
+  const done = store.result(todaysMeta.n);
   card.innerHTML = `
-    <div class="tc-emoji">${todaysPuzzle.emoji}</div>
-    <div class="tc-kicker">Puzzle #${todaysPuzzle.n}</div>
-    <div class="tc-title">${todaysPuzzle.title}</div>
-    <p class="tc-sub">${todaysPuzzle.blurb}</p>
-    <div class="tc-goal"><span>Goal</span>${todaysPuzzle.goal}</div>`;
+    <div class="tc-emoji">${todaysMeta.emoji}</div>
+    <div class="tc-kicker">Puzzle #${todaysMeta.n}</div>
+    <div class="tc-title">${todaysMeta.title}</div>
+    <p class="tc-sub">${todaysMeta.blurb}</p>
+    <div class="tc-goal"><span>Goal</span>${todaysMeta.goal}</div>`;
 
   const btn = document.createElement("button");
   btn.className = "cta-btn";
   if (done) {
     btn.textContent = "See your result";
-    btn.onclick = () => showResult(todaysPuzzle, done, true);
+    btn.onclick = () => openResult(todaysMeta.n);
     const replay = document.createElement("button");
     replay.className = "ghost wide-btn";
     replay.textContent = "Play again (won't count)";
-    replay.onclick = () => startPuzzle(todaysPuzzle, true);
+    replay.onclick = () => startPuzzle(todaysMeta.n, true);
     card.append(btn, replay);
   } else {
     btn.textContent = "Start";
-    btn.onclick = () => startPuzzle(todaysPuzzle, false);
+    btn.onclick = () => startPuzzle(todaysMeta.n, false);
     card.appendChild(btn);
   }
 }
@@ -127,27 +152,28 @@ function renderArchive() {
   teardown();
   const list = $("archive-list");
   list.innerHTML = "";
-  const available = PUZZLES.filter((p) => p.n - 1 <= dayNumber);
+  const available = MANIFEST.filter((m) => isReleased(m.n));
 
   if (!available.length) {
-    list.appendChild(Object.assign(document.createElement("p"), {
-      className: "q-detail center", textContent: "Nothing yet — come back tomorrow.",
-    }));
+    const p = document.createElement("p");
+    p.className = "q-detail center";
+    p.textContent = "Nothing yet — come back tomorrow.";
+    list.appendChild(p);
   }
 
-  available.slice().reverse().forEach((p) => {
-    const r = store.result(p.n);
+  available.slice().reverse().forEach((m) => {
+    const r = store.result(m.n);
     const row = document.createElement("button");
     row.className = "arch-row" + (r ? " solved" : "");
     row.innerHTML = `
-      <span class="arch-emoji">${p.emoji}</span>
+      <span class="arch-emoji">${m.emoji}</span>
       <span class="arch-main">
-        <b>#${p.n} · ${p.title}</b>
-        <small>${r ? r.headline : p.goal}</small>
+        <b>#${m.n} · ${m.title}</b>
+        <small>${r ? r.headline : m.goal}</small>
       </span>
       <span class="arch-tick">${r ? "✓" : "›"}</span>`;
     // An unplayed past puzzle still counts — you just can't rebuild a streak with it.
-    row.onclick = () => (r ? showResult(p, r, true) : startPuzzle(p, false));
+    row.onclick = () => (r ? openResult(m.n) : startPuzzle(m.n, false));
     list.appendChild(row);
   });
   show("archive");
@@ -167,14 +193,30 @@ function teardown() {
 
 const fmtTime = (s) => `${Math.floor(s / 60)}:${String(s % 60).padStart(2, "0")}`;
 
-function startPuzzle(puzzle, isReplay) {
-  teardown();
-  const engine = TYPES[puzzle.type];
-  session = { puzzle, isReplay, elapsed: 0, timerId: null };
+function loadError(root, n, err) {
+  console.error("puzzle load failed", n, err);
+  root.innerHTML = `<p class="q-detail center">Couldn't load puzzle #${n}.
+    Check your connection and try again.</p>`;
+}
 
-  $("play-title").textContent = `#${puzzle.n} · ${puzzle.title}`;
-  $("play-goal").textContent = puzzle.goal;
+async function startPuzzle(n, isReplay) {
+  teardown();
+  const meta = metaFor(n);
+  $("play-title").textContent = `#${n} · ${meta.title}`;
+  $("play-goal").textContent = meta.goal;
   $("replay-flag").hidden = !isReplay;
+  $("clock").hidden = true;
+
+  const root = $("play-root");
+  root.innerHTML = `<p class="q-detail center">Loading puzzle #${n}…</p>`;
+  show("play");
+
+  let puzzle;
+  try { puzzle = await loadPuzzle(n); }
+  catch (err) { return loadError(root, n, err); }
+
+  const engine = puzzle.engine;
+  session = { puzzle, isReplay, elapsed: 0, timerId: null };
 
   const clock = $("clock");
   clock.hidden = !engine.usesTimer;
@@ -186,23 +228,33 @@ function startPuzzle(puzzle, isReplay) {
     }, 1000);
   }
 
-  const root = $("play-root");
   root.innerHTML = "";
-
   engine.mount(root, puzzle, {
     timeText: () => fmtTime(session.elapsed),
     onTeardown: (fn) => teardownFns.push(fn),
     finish: (result) => {
       if (session && session.timerId) clearInterval(session.timerId);
       result.seconds = session ? session.elapsed : 0;
-      if (!isReplay) store.saveResult(puzzle.n, result);
+      if (!isReplay) store.saveResult(n, result);
       // A replay shows what you just did, not the run that's on record.
-      const shown = isReplay ? result : (store.result(puzzle.n) || result);
-      setTimeout(() => showResult(puzzle, shown, false), 450);
+      const shown = isReplay ? result : (store.result(n) || result);
+      setTimeout(() => showResult(puzzle, shown), 450);
     },
   });
+}
 
-  show("play");
+/* Revisiting a stored result still needs the puzzle's author note, so the
+   module gets loaded even though nothing will be played. */
+async function openResult(n) {
+  teardown();
+  const r = store.result(n);
+  try {
+    const puzzle = await loadPuzzle(n);
+    showResult(puzzle, r);
+  } catch (err) {
+    loadError($("play-root"), n, err);
+    show("play");
+  }
 }
 
 /* ---------- result + share ------------------------------------------------- */
@@ -216,7 +268,7 @@ const SOCIALS = [
     path: "M18.9 1.15h3.68l-8.04 9.19L24 22.85h-7.41l-5.8-7.58-6.64 7.58H.46l8.6-9.83L0 1.15h7.59l5.24 6.93 6.07-6.93Zm-1.29 19.5h2.04L6.48 3.24H4.3l13.31 17.41Z" },
 ];
 
-function shareText(puzzle, r) {
+export function shareText(puzzle, r) {
   return [
     `🧩 Claude's Daily Puzzle #${puzzle.n} — ${puzzle.title}`,
     `${puzzle.emoji} ${r.headline}`,
@@ -226,7 +278,7 @@ function shareText(puzzle, r) {
   ].filter(Boolean).join("\n");
 }
 
-function showResult(puzzle, r, revisiting) {
+function showResult(puzzle, r) {
   teardown();
   $("done-emoji").textContent = r.perfect ? "🏆" : puzzle.emoji;
   $("done-title").textContent = r.perfect ? "Perfect." : "Done.";
@@ -241,8 +293,7 @@ function showResult(puzzle, r, revisiting) {
   $("done-stats").innerHTML = (r.stats || [])
     .map(([label, value]) => `<span><b>${value}</b>${label}</span>`).join("");
 
-  $("done-notes").innerHTML = (r.notes || [])
-    .map((n) => `<li>${n}</li>`).join("");
+  $("done-notes").innerHTML = (r.notes || []).map((n) => `<li>${n}</li>`).join("");
   $("done-notes").hidden = !(r.notes || []).length;
 
   $("author-note").innerHTML = puzzle.note;
@@ -266,8 +317,8 @@ function showResult(puzzle, r, revisiting) {
       <svg viewBox="0 0 24 24" aria-hidden="true"><path d="${s.path}"/></svg>
     </a>`).join("");
 
-  $("done-replay").textContent = revisiting ? "Play it again" : "Play again (won't count)";
-  $("done-replay").onclick = () => startPuzzle(puzzle, true);
+  $("done-replay").textContent = "Play again (won't count)";
+  $("done-replay").onclick = () => startPuzzle(puzzle.n, true);
 
   show("done");
 }
@@ -280,7 +331,10 @@ $("archive-back").onclick = renderHome;
 $("about-back").onclick = renderHome;
 $("open-archive").onclick = renderArchive;
 $("open-about").onclick = () => { teardown(); show("about"); };
-$("bank-count").textContent = PUZZLES.length;
+$("bank-count").textContent = BANK_SIZE;
 
 renderHome();
 show("home");
+
+/* Exposed for the headless test harness. */
+export { startPuzzle, openResult, renderArchive, renderHome, loadPuzzle, store, MANIFEST };

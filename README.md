@@ -39,30 +39,89 @@ No build step, no framework, no server, no accounts, no analytics. Results live 
 `localStorage` and nowhere else.
 
 ```
-index.html    markup + all styling
-puzzles.js    the bank — puzzle content and answers
-types.js      one engine per mechanic (fermi, cryptogram, rule, order, calibration)
-app.js        day arithmetic, persistence, routing, share card
+index.html          markup + all styling
+app.js              day arithmetic, persistence, routing, share card
+codec.js            payload encoding (see "Spoilers" below)
+puzzles/index.js    manifest — metadata only, safe to read
+puzzles/00n.js      one module per puzzle, encoded, fetched on its day
+engines/*.js        one module per mechanic, shared across puzzles
+tools/puzzle.js     authoring CLI, never shipped to the browser
 ```
+
+### Why content and code aren't 1:1
+
+The obvious move is "one file per puzzle, containing its own code". But **mechanics
+recur and content doesn't** — day 12 will be another estimation puzzle, day 9 another
+cipher — so bundling an engine into every puzzle file would ship the same engine a dozen
+times.
+
+Instead a puzzle module either *names* a shared engine or *defines* its own:
+
+```js
+// puzzles/007.js — reuses an existing mechanic
+export const blob = "…";              // { type: "fermi", note, data }
+
+// puzzles/008.js — brings bespoke code with it
+export const blob = "…";
+export const engine = { usesTimer: false, mount(root, puzzle, api) { … } };
+```
+
+Co-location when a puzzle needs its own code, reuse when it doesn't. The loader prefers
+an exported `engine` and falls back to `engines/<type>.js`.
+
+## Spoilers
+
+Two different problems, with two very different answers.
+
+**Future puzzles** are genuinely protected: they aren't in the bundle. Nothing is fetched
+until its day, so a player's browser never holds next week's answers. That's the main
+reason for the per-puzzle module split.
+
+**Today's puzzle** can only be obscured, never hidden. The browser has to hold the answer
+in order to grade you against it, so anyone determined with devtools will get there. The
+payload is XOR'd and base64'd (`codec.js`) purely so that view-source and Ctrl-F don't
+casually spoil a puzzle you were about to play. That's the whole claim — it is a speed
+bump, not security, and it would be dishonest to describe it as anything more.
+
+Note that hashing the answers instead wouldn't work: Deep Time has to know the real
+permutation to tell you *how many* items are in the right place, so a one-way hash would
+break the mechanic.
+
+The manifest stays readable on purpose — titles, blurbs and scoring rules are what the
+home card and archive already display.
 
 ## Adding a puzzle
 
-Append to `PUZZLES` in `puzzles.js` with the next `n`, pointing `type` at an engine in
-`types.js`. It appears automatically on its day. A new *mechanic* means a new entry in
-`TYPES` — it needs `usesTimer` and a `mount(root, puzzle, api)` that eventually calls
-`api.finish({ headline, squares, stats, perfect })`. The shell handles everything else:
-timing, storage, streaks, the results screen and the share card.
+Working content lives in `tools/content/` (gitignored); only the encoded module is
+committed. Round-trip freely:
+
+```bash
+node tools/puzzle.js new 6        # scaffold tools/content/006.js
+node tools/puzzle.js pack 6       # encode -> puzzles/006.js, update the manifest
+node tools/puzzle.js unpack 6     # decode an existing puzzle to edit it again
+node tools/puzzle.js verify       # decode everything, check shapes and engines
+```
+
+`verify` is the thing to run before committing. A new *mechanic* means a new file in
+`engines/` exporting `{ usesTimer, mount(root, puzzle, api) }` that eventually calls
+`api.finish({ headline, squares, stats, perfect })`. The shell handles the rest: timing,
+storage, streaks, results screen, share card.
+
+JSON can't hold a function, so predicates are authored as `"fn:(x) => …"` strings and
+revived on decode — which conveniently makes a rule predicate one of the most opaque
+things in the payload. (Don't paste a real one into this README. I did, briefly, and it
+spoiled puzzle #3 on the repo's front page.)
 
 ## Testing
 
 There's no test runner checked in, but the engines are driven headlessly with `jsdom`
-during development — booting the real `index.html`, playing each puzzle through to its
-result screen, and asserting on the share card. That's how the interesting bugs turned up:
-the cryptogram's free letters were originally the three *most* common ones, which handed
-over half the board and skipped the only interesting step; the Deep Time shuffle seed
-produced a near-sorted starting order; and several Fermi answers sat at the exact midpoint
-of their slider, so leaving it centred was a free hit. All three were invisible from
-reading the code and obvious from playing it.
+during development — the real `index.html` and the real ES modules, playing each puzzle
+through to its result screen and asserting on the share card. That's how the interesting
+bugs turned up: the cryptogram's free letters were originally the three *most* common
+ones, which handed over half the board and skipped the only interesting step; the Deep
+Time shuffle seed produced a near-sorted starting order; and several Fermi answers sat at
+the exact midpoint of their slider, so leaving it centred was a free hit. All three were
+invisible from reading the code and obvious from playing it.
 
 ## Credits
 
