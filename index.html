@@ -296,6 +296,70 @@
   .order-feedback { text-align: center; font-size: .9rem; color: var(--faint); font-weight: 600; min-height: 1.4em; }
   .order-feedback.show { color: var(--ok); }
 
+  /* ---------- balance scale ---------- */
+  .coin-grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 7px; }
+  .coin {
+    position: relative; aspect-ratio: 1; border-radius: 50%;
+    background: var(--panel); border: 1px solid var(--line);
+    font-weight: 800; font-size: .95rem; font-variant-numeric: tabular-nums;
+    display: grid; place-items: center; transition: .12s;
+  }
+  .coin:hover { background: var(--panel-2); }
+  .coin.left { border-color: var(--accent-2); background: rgba(127,179,213,.14); color: #dbeaf5; }
+  .coin.right { border-color: var(--accent); background: rgba(232,130,90,.14); color: #f7ded2; }
+  .coin i {
+    position: absolute; top: 3px; right: 5px; font-style: normal;
+    font-size: .55rem; font-weight: 800; letter-spacing: .5px; color: var(--faint);
+  }
+  .coin.left i { color: var(--accent-2); }
+  .coin.right i { color: var(--accent); }
+  .pans { display: flex; gap: 10px; }
+  .pan {
+    flex: 1; min-height: 62px; background: var(--panel); border: 1px solid var(--line);
+    border-radius: var(--r-sm); padding: 9px 11px; display: flex; flex-direction: column; gap: 5px;
+  }
+  .pan.l { border-top: 3px solid var(--accent-2); }
+  .pan.r { border-top: 3px solid var(--accent); }
+  .pan h4 { font-size: .64rem; text-transform: uppercase; letter-spacing: 1.4px; color: var(--faint); font-weight: 800; }
+  .pan-coins { font-size: .95rem; font-weight: 700; font-variant-numeric: tabular-nums; letter-spacing: 1px; }
+  .weigh-msg { text-align: center; color: var(--faint); font-size: .78rem; min-height: 1.2em; }
+  .log-row.sank { border-left-color: var(--accent); }
+  .log-row.sank b { color: var(--accent); }
+  .log-row.level { border-left-color: var(--accent-2); }
+  .log-row.level b { color: var(--accent-2); }
+  .weigh-sides { font-size: .88rem; letter-spacing: .5px; }
+  .weigh-sides em { color: var(--faint); font-style: normal; font-weight: 600; padding: 0 3px; }
+  .sheet-body { display: flex; flex-direction: column; gap: 8px; }
+  .coin-grid.pick .coin { font-size: .9rem; }
+
+  /* ---------- optimal stopping ---------- */
+  .fine { font-size: .76rem; color: var(--faint); }
+  .seen-strip { display: flex; flex-wrap: wrap; gap: 5px; justify-content: center; }
+  .seen {
+    background: var(--panel); border: 1px solid var(--line); border-radius: 999px;
+    padding: 3px 9px; font-size: .72rem; color: var(--faint);
+    font-variant-numeric: tabular-nums; opacity: .8;
+  }
+  .offer-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; }
+  .offer {
+    background: var(--panel); border: 1px solid var(--line); border-radius: var(--r-sm);
+    padding: 7px 8px; font-size: .82rem; font-weight: 700; color: var(--muted);
+    font-variant-numeric: tabular-nums; display: flex; align-items: baseline; gap: 6px;
+  }
+  .offer small { color: var(--faint); font-size: .62rem; font-weight: 800; min-width: 12px; }
+  .offer.best { border-color: rgba(125,201,138,.5); background: rgba(125,201,138,.09); color: var(--good); }
+  .offer.mine { border-color: var(--accent); color: var(--text); }
+  .offer.mine.best { border-color: var(--good); }
+
+  /* ---------- scatterplots ---------- */
+  .plot {
+    background: var(--panel); border: 1px solid var(--line); border-radius: var(--r-md);
+    padding: 8px; line-height: 0;
+  }
+  .plot svg { display: block; width: 100%; height: auto; }
+  .plot circle { fill: var(--accent-2); fill-opacity: .78; }
+  .plot line { stroke: var(--line); stroke-width: 1; }
+
   /* ---------- done ---------- */
   .done-card {
     background: linear-gradient(180deg, var(--panel-2), var(--panel) 40%);
