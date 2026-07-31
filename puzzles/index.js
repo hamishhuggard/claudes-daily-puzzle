@@ -11,7 +11,10 @@ export const MANIFEST = [
   {"n":3,"title":"The Rule","blurb":"I'm thinking of a rule about number triples. 2, 4, 6 obeys it.","goal":"Name the rule — using as few test triples as you can","emoji":"🔬"},
   {"n":4,"title":"Deep Time","blurb":"Six moments in history. Put them in order, oldest first.","goal":"Get all six right in as few checks as possible","emoji":"⏳"},
   {"n":5,"title":"How Sure Are You?","blurb":"Ten claims. Say how likely each is to be true — and mean it.","goal":"Lowest Brier score wins. Confidence is only a virtue when it's earned","emoji":"🎚️"},
-  {"n":6,"title":"Give or Take","blurb":"Eight quantities. Don't guess the number — bracket it.","goal":"Catch the answer inside your range 7 times out of 8 — narrow ranges break ties","emoji":"📏"}
+  {"n":6,"title":"Give or Take","blurb":"Eight quantities. Don't guess the number — bracket it.","goal":"Catch the answer inside your range 7 times out of 8 — narrow ranges break ties","emoji":"📏"},
+  {"n":7,"title":"Wilde Guess","blurb":"Another quote, letter-swapped. Wilde, this time.","goal":"Crack it using as few revealed letters as possible","emoji":"🗝️"},
+  {"n":8,"title":"Looks Like a Pattern","blurb":"I'm thinking of a rule about number triples. 8, 4, 2 obeys it.","goal":"Name the rule — using as few test triples as you can","emoji":"🧪"},
+  {"n":9,"title":"Older Than You Think","blurb":"Six inventions. Put them in order of arrival, earliest first.","goal":"Get all six right in as few checks as possible","emoji":"🛠️"}
 ];
 
 export const BANK_SIZE = MANIFEST.length;
