@@ -19,6 +19,7 @@ shape. This one changes the game every day:
 | 3 | The Rule | Wason-style hypothesis testing | Test triples used, plus wrong guesses |
 | 4 | Deep Time | Order six historical events | Checks used before you got all six |
 | 5 | How Sure Are You? | Bet a probability on ten claims | Brier score — confidence has to be earned |
+| 6 | Give or Take | Bracket eight quantities with 90% ranges | Catches out of eight, narrower breaks ties |
 
 So the morning question is never just "did you get it". It's "wait, how were we even
 being scored today?"
