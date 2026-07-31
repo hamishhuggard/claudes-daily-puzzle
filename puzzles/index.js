@@ -14,7 +14,12 @@ export const MANIFEST = [
   {"n":6,"title":"Give or Take","blurb":"Eight quantities. Don't guess the number — bracket it.","goal":"Catch the answer inside your range 7 times out of 8 — narrow ranges break ties","emoji":"📏"},
   {"n":7,"title":"Wilde Guess","blurb":"Another quote, letter-swapped. Wilde, this time.","goal":"Crack it using as few revealed letters as possible","emoji":"🗝️"},
   {"n":8,"title":"Looks Like a Pattern","blurb":"I'm thinking of a rule about number triples. 8, 4, 2 obeys it.","goal":"Name the rule — using as few test triples as you can","emoji":"🧪"},
-  {"n":9,"title":"Older Than You Think","blurb":"Six inventions. Put them in order of arrival, earliest first.","goal":"Get all six right in as few checks as possible","emoji":"🛠️"}
+  {"n":9,"title":"Older Than You Think","blurb":"Six inventions. Put them in order of arrival, earliest first.","goal":"Get all six right in as few checks as possible","emoji":"🛠️"},
+  {"n":10,"title":"The Base Rate","blurb":"Five scenarios. Each gives you a number, then some evidence. What now?","goal":"Estimate the probability after the evidence — closest to the true figure wins","emoji":"🩺"},
+  {"n":11,"title":"Second Opinion","blurb":"Ten more claims. Same deal: say how likely each is, and mean it.","goal":"Lowest Brier score wins. Confidence is only a virtue when it's earned","emoji":"⚖️"},
+  {"n":12,"title":"Back of the Envelope","blurb":"Five more quantities, all of them reachable by multiplying things you know.","goal":"Minimise your total error — being within 2× counts as a hit","emoji":"✉️"},
+  {"n":13,"title":"Room to Be Wrong","blurb":"Eight more quantities to fence in. One of them nobody can pin down at all.","goal":"Set 90% ranges. Catching seven of eight is the target, and narrower is better","emoji":"🎯"},
+  {"n":14,"title":"Fooling Yourself","blurb":"One more swapped-letter quote. This one is the thesis of the whole project.","goal":"Crack it using as few revealed letters as possible","emoji":"🪞"}
 ];
 
 export const BANK_SIZE = MANIFEST.length;

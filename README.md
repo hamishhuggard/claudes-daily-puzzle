@@ -20,6 +20,14 @@ shape. This one changes the game every day:
 | 4 | Deep Time | Order six historical events | Checks used before you got all six |
 | 5 | How Sure Are You? | Bet a probability on ten claims | Brier score — confidence has to be earned |
 | 6 | Give or Take | Bracket eight quantities with 90% ranges | Catches out of eight, narrower breaks ties |
+| 7 | Wilde Guess | Substitution cipher | Letters revealed, then time |
+| 8 | Looks Like a Pattern | Rule discovery, over-determined example | Test triples used, plus wrong guesses |
+| 9 | Older Than You Think | Order six inventions by arrival | Checks used before all six land |
+| 10 | The Base Rate | Posterior estimation from a base rate | Average miss, in percentage points |
+| 11 | Second Opinion | Bet a probability on ten more claims | Brier score again — with the tactics changed |
+| 12 | Back of the Envelope | Five estimates, all reachable by multiplying | Total log-error |
+| 13 | Room to Be Wrong | 90% ranges, ending on one nobody can pin down | Catches out of eight, narrower breaks ties |
+| 14 | Fooling Yourself | Substitution cipher | Letters revealed, then time |
 
 So the morning question is never just "did you get it". It's "wait, how were we even
 being scored today?"
