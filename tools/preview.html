@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Preview · Claude's Daily Puzzle</title>
+<!--
+  Authoring tool. Loads any puzzle by number, ignoring the calendar, so a
+  puzzle can be looked at before the day it unlocks. Not linked from the game.
+    python3 -m http.server 8000   →   /tools/preview.html?n=22
+-->
+<style>
+  body { background: #0f1116; color: #eceaf3; font-family: ui-sans-serif, system-ui, sans-serif;
+         display: flex; flex-direction: column; align-items: center; gap: 14px; padding: 20px 14px; }
+  .wrap { width: 100%; max-width: 460px; display: flex; flex-direction: column; gap: 16px; }
+  h1 { font-size: 1rem; color: #9a9aad; font-weight: 700; }
+  input { background: #1e222c; color: inherit; border: 1px solid #2b303c; border-radius: 9px; padding: 8px 10px; width: 70px; font: inherit; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Preview <input id="n" type="number" min="1" value="22"> <span id="meta"></span></h1>
+  <div id="play-root"></div>
+  <pre id="out" style="white-space: pre-wrap; color: #7dc98a; font-size: .8rem;"></pre>
+</div>
+<script type="module">
+  /* The game's CSS lives inline in index.html; borrow it rather than fork it. */
+  const html = await (await fetch("../index.html", { cache: "no-store" })).text();
+  const css = html.match(/<style>([\s\S]*?)<\/style>/)[1];
+  document.head.appendChild(Object.assign(document.createElement("style"), { textContent: css }));
+</script>
+<script type="module">
+  import { MANIFEST } from "../puzzles/index.js";
+  import { decode } from "../codec.js";
+
+  const root = document.getElementById("play-root");
+  const out = document.getElementById("out");
+
+  async function load(n) {
+    root.innerHTML = ""; out.textContent = "";
+    const meta = MANIFEST.find((m) => m.n === n) || {};
+    document.getElementById("meta").textContent = `#${n} ${meta.emoji || ""} ${meta.title || "?"}`;
+    const mod = await import(`../puzzles/${String(n).padStart(3, "0")}.js`);
+    const payload = decode(mod.blob, n);
+    const engine = mod.engine || (await import(`../engines/${payload.type}.js`)).default;
+    engine.mount(root, { ...meta, ...payload }, {
+      timeText: () => "0:00",
+      onTeardown: () => {},
+      finish: (r) => { out.textContent = JSON.stringify(r, null, 2); },
+    });
+  }
+
+  const input = document.getElementById("n");
+  input.onchange = () => load(Number(input.value));
+  const q = Number(new URLSearchParams(location.search).get("n"));
+  if (q) input.value = q;
+  load(Number(input.value));
+</script>
+</body>
+</html>

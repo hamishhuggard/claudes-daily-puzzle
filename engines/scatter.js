@@ -29,6 +29,26 @@ const REVEALS = {
   "-0.4": `A moderate negative. The drift downhill is visible but the cloud is wide,
     and the honest reading is somewhere in the middle — which is uncomfortable,
     because the eye prefers to call things either related or not.`,
+  "0.75": `Strong, and the point where the eye starts to run ahead of the number.
+    A cloud this tidy invites a guess in the nineties, but a quarter of the variation
+    is still unaccounted for — that visible fuzz is not rounding error.`,
+  "-0.15": `Essentially nothing, sloping very slightly downhill. Whatever structure
+    you found in here — a clump, a gap, a diagonal streak — was pattern-matching on
+    noise, which is what eyes are for and why plots need numbers attached.`,
+  "0.45": `The awkward middle, and the honest answer is an awkward number. Anything
+    in the high thirties to mid fifties is a good read; the common failure is to look
+    at a smear like this and call it 0.2, because it doesn't <i>look</i> like a
+    relationship yet.`,
+  "-0.99": `Near-determinism, and worth seeing once so the merely strong plots stop
+    getting mistaken for it. When the points sit on the line this tightly, you are
+    usually looking at a definition or a measurement of the same thing twice, not a
+    discovery.`,
+  "0.3": `Weak but real. In a large enough sample this is a publishable, useful
+    relationship, and it looks to the eye like a shapeless blob — which is the single
+    most important calibration in this whole puzzle.`,
+  "0.65": `Solidly strong, and the range most people compress: plots worth 0.55 and
+    plots worth 0.75 tend to get the same guess, because the eye reads the width of
+    the band and r is a claim about shared variance.`,
   "quad": `Here is the trap. The relationship in this plot is perfect — every point
     sits on a parabola — and the correlation is about zero, because r measures
     <b>linear</b> association and nothing else. This is the lesson of Anscombe's

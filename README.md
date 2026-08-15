@@ -1,4 +1,4 @@
-# Claude's Daily Puzzle 🧩
+| 28 | Ninety Percent Sure | Eight last quantities to bracket | Catches out of eight, narrower breaks ties |
 
 **[Play it →](https://hamishhuggard.github.io/claudes-daily-puzzle/)**
 
@@ -20,14 +20,28 @@ shape. This one changes the game every day:
 | 4 | Deep Time | Order six historical events | Checks used before you got all six |
 | 5 | How Sure Are You? | Bet a probability on ten claims | Brier score — confidence has to be earned |
 | 6 | Give or Take | Bracket eight quantities with 90% ranges | Catches out of eight, narrower breaks ties |
-| 7 | Wilde Guess | Substitution cipher | Letters revealed, then time |
-| 8 | Looks Like a Pattern | Rule discovery, over-determined example | Test triples used, plus wrong guesses |
-| 9 | Older Than You Think | Order six inventions by arrival | Checks used before all six land |
+| 7 | The Odd Coin | Twelve coins, one fake, a balance scale | Weighings used — three is the theoretical floor |
+| 8 | No Backsies | Optimal stopping, three rounds of offers | What you took, against what was still coming |
+| 9 | Eyeball It | Judge the correlation of six scatterplots | Total error across the six, 0.1 is a hit |
 | 10 | The Base Rate | Posterior estimation from a base rate | Average miss, in percentage points |
 | 11 | Second Opinion | Bet a probability on ten more claims | Brier score again — with the tactics changed |
 | 12 | Back of the Envelope | Five estimates, all reachable by multiplying | Total log-error |
 | 13 | Room to Be Wrong | 90% ranges, ending on one nobody can pin down | Catches out of eight, narrower breaks ties |
 | 14 | Fooling Yourself | Substitution cipher | Letters revealed, then time |
+| 15 | Further North Than You Think | Order six cities by latitude | Checks used before all six land |
+| 16 | Sure About That? | Bet a probability on ten claims | Brier score — the fun facts are half false |
+| 17 | Entertaining a Thought | Substitution cipher, misattributed quote | Letters revealed, then time |
+| 18 | Nobody Knows That | 90% ranges on eight unknowable numbers | Catches out of eight, narrower breaks ties |
+| 19 | Twice As Obvious | Rule discovery from an over-determined seed | Test triples used, plus wrong guesses |
+| 20 | Trust Your Eye Again | Six more correlations, by eye | Total error across the six |
+| 21 | Going, Going | Optimal stopping, three more auctions | What you took, against what was coming |
+| 22 | The Camel | Fairy chess: a 1-3 leaper, corner to corner | Moves used against a par found by search |
+| 23 | The Grasshopper | Fairy chess: a piece that needs hurdles | Moves used against par — both pieces move |
+| 24 | Mate in Two | Fairy chess: camel and grasshopper, Black defends | Attempts before the forced mate lands |
+| 25 | Faster Than You Think | Order six animals by top speed | Checks used before all six land |
+| 26 | Full of Doubts | Substitution cipher, Russell (roughly) | Letters revealed, then time |
+| 27 | Third Opinion | Bet a probability on ten more claims | Brier score, third time — look for a direction |
+| 28 | Ninety Percent Sure | Eight last quantities to bracket | Catches out of eight, narrower breaks ties |
 
 So the morning question is never just "did you get it". It's "wait, how were we even
 being scored today?"
@@ -111,6 +125,11 @@ node tools/puzzle.js unpack 6     # decode an existing puzzle to edit it again
 node tools/puzzle.js verify       # decode everything, check shapes and engines
 ```
 
+To *look* at a puzzle before its unlock day, serve the repo and open
+`tools/preview.html?n=22` — it loads any puzzle by number, ignoring the calendar, and
+prints the finished result object. It borrows the game's CSS from `index.html` rather
+than forking it, so what you see is what players get.
+
 `verify` is the thing to run before committing. A new *mechanic* means a new file in
 `engines/` exporting `{ usesTimer, mount(root, puzzle, api) }` that eventually calls
 `api.finish({ headline, squares, stats, perfect })`. The shell handles the rest: timing,
@@ -137,5 +156,12 @@ invisible from reading the code and obvious from playing it.
 Puzzles, code and design by Claude (Opus 5), commissioned and hosted by
 [@hamishhuggard](https://github.com/hamishhuggard). Puzzle #3 is a variation on Peter
 Wason's 1960 rule-discovery task. Puzzle #2 quotes Alan Kay.
+
+Puzzles #22–#24 are a three-day fairy chess arc — a camel (a 1,3 leaper) on day one, a
+grasshopper on day two, and both of them mating a king on day three. The rules live in
+`engines/fairy-rules.js`, deliberately free of any DOM so the same code that plays the
+puzzle also proves it: every par is the shortest route by breadth-first search, and the
+mate in two was found by searching several hundred thousand positions for one with a
+single key move, played by a fairy piece, that mates against every defence.
 
 If an answer is wrong, that's on me — open an issue.

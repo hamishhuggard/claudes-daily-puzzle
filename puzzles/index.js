@@ -19,7 +19,21 @@ export const MANIFEST = [
   {"n":11,"title":"Second Opinion","blurb":"Ten more claims. Same deal: say how likely each is, and mean it.","goal":"Lowest Brier score wins. Confidence is only a virtue when it's earned","emoji":"⚖️"},
   {"n":12,"title":"Back of the Envelope","blurb":"Five more quantities, all of them reachable by multiplying things you know.","goal":"Minimise your total error — being within 2× counts as a hit","emoji":"✉️"},
   {"n":13,"title":"Room to Be Wrong","blurb":"Eight more quantities to fence in. One of them nobody can pin down at all.","goal":"Set 90% ranges. Catching seven of eight is the target, and narrower is better","emoji":"🎯"},
-  {"n":14,"title":"Fooling Yourself","blurb":"One more swapped-letter quote. This one is the thesis of the whole project.","goal":"Crack it using as few revealed letters as possible","emoji":"🪞"}
+  {"n":14,"title":"Fooling Yourself","blurb":"One more swapped-letter quote. This one is the thesis of the whole project.","goal":"Crack it using as few revealed letters as possible","emoji":"🪞"},
+  {"n":15,"title":"Further North Than You Think","blurb":"Six cities. Put them in order, northernmost at the top.","goal":"Get all six right in as few checks as possible","emoji":"🧭"},
+  {"n":16,"title":"Sure About That?","blurb":"Ten claims. Say how likely each is to be true — and mean it.","goal":"Lowest Brier score wins. Confidence is only a virtue when it's earned","emoji":"🎛️"},
+  {"n":17,"title":"Entertaining a Thought","blurb":"A quote, letter-swapped — and misattributed for two centuries.","goal":"Crack it using as few revealed letters as possible","emoji":"🗝️"},
+  {"n":18,"title":"Nobody Knows That","blurb":"Eight quantities you have no business knowing. Fence them in anyway.","goal":"Catch the answer inside your range 7 times out of 8 — narrow ranges break ties","emoji":"🪤"},
+  {"n":19,"title":"Twice As Obvious","blurb":"Another rule about number triples. This time 2, 4, 8 obeys it.","goal":"Name the rule — using as few test triples as you can","emoji":"🧫"},
+  {"n":20,"title":"Trust Your Eye Again","blurb":"Six more scatterplots. How tight is each relationship, really?","goal":"Pin each correlation within 0.1 — smallest total error wins","emoji":"👁️"},
+  {"n":21,"title":"Going, Going","blurb":"Three more auctions, one offer at a time. Take it or lose it.","goal":"Come away with the best offer you can, over three rounds — hindsight will be watching","emoji":"🔨"},
+  {"n":22,"title":"The Camel","blurb":"A chess piece that doesn't exist. It moves like a knight with a longer stride — get it home.","goal":"Visit both marked squares, in order, in as few moves as you can — par is 9","emoji":"🐫"},
+  {"n":23,"title":"The Grasshopper","blurb":"A piece that can't move at all unless something is in its way. Yesterday's camel is the only thing on the board.","goal":"Take the grasshopper to the gold square and back home, in as few moves as you can — par is 6","emoji":"🦗"},
+  {"n":24,"title":"Mate in Two","blurb":"The camel and the grasshopper, together, against a cornered king. Black defends.","goal":"Force mate in two moves — Black will play the best defence every time","emoji":"♟️"},
+  {"n":25,"title":"Faster Than You Think","blurb":"Six top speeds. Slowest at the top, fastest at the bottom.","goal":"Get all six right in as few checks as possible","emoji":"💨"},
+  {"n":26,"title":"Full of Doubts","blurb":"A letter-swapped quote about the confidence of the wrong sort of person.","goal":"Crack it using as few revealed letters as possible","emoji":"🫧"},
+  {"n":27,"title":"Third Opinion","blurb":"Ten claims, one last time. How likely is each to be true?","goal":"Lowest Brier score wins. Confidence is only a virtue when it's earned","emoji":"🧾"},
+  {"n":28,"title":"Ninety Percent Sure","blurb":"Eight last quantities to fence in. You know none of them exactly.","goal":"Catch the answer inside your range 7 times out of 8 — narrow ranges break ties","emoji":"🧮"}
 ];
 
 export const BANK_SIZE = MANIFEST.length;
