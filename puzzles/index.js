@@ -30,10 +30,10 @@ export const MANIFEST = [
   {"n":22,"title":"The Camel","blurb":"A chess piece that doesn't exist. It moves like a knight with a longer stride — get it home.","goal":"Visit both marked squares, in order, in as few moves as you can — par is 9","emoji":"🐫"},
   {"n":23,"title":"The Grasshopper","blurb":"A piece that can't move at all unless something is in its way. Yesterday's camel is the only thing on the board.","goal":"Take the grasshopper to the gold square and back home, in as few moves as you can — par is 6","emoji":"🦗"},
   {"n":24,"title":"Mate in Two","blurb":"The camel and the grasshopper, together, against a cornered king. Black defends.","goal":"Force mate in two moves — Black will play the best defence every time","emoji":"♟️"},
-  {"n":25,"title":"Faster Than You Think","blurb":"Six top speeds. Slowest at the top, fastest at the bottom.","goal":"Get all six right in as few checks as possible","emoji":"💨"},
-  {"n":26,"title":"Full of Doubts","blurb":"A letter-swapped quote about the confidence of the wrong sort of person.","goal":"Crack it using as few revealed letters as possible","emoji":"🫧"},
-  {"n":27,"title":"Third Opinion","blurb":"Ten claims, one last time. How likely is each to be true?","goal":"Lowest Brier score wins. Confidence is only a virtue when it's earned","emoji":"🧾"},
-  {"n":28,"title":"Ninety Percent Sure","blurb":"Eight last quantities to fence in. You know none of them exactly.","goal":"Catch the answer inside your range 7 times out of 8 — narrow ranges break ties","emoji":"🧮"}
+  {"n":25,"title":"Everyone Lies","blurb":"Six islanders. Every truth-teller's statements are all true; every liar's are all false. Work out who's who.","goal":"Label all six correctly — confessions and wrong submissions both cost you","emoji":"🕊️"},
+  {"n":26,"title":"Doublets","blurb":"Turn one word into another, one letter at a time — every stop has to be real.","goal":"Reach the target word in as few one-letter changes as possible; par is the true shortest route","emoji":"🪜"},
+  {"n":27,"title":"Three Machines","blurb":"Three slot machines, forty pulls, one budget. Find the best one before you run out.","goal":"Two rounds of forty pulls each — scored on regret against the machine that actually paid best","emoji":"🎰"},
+  {"n":28,"title":"Last Stone","blurb":"Three take-away games, one perfect opponent. Win all three, or start over.","goal":"Win each position without a restart — restarts against a perfect opponent are the score","emoji":"🪨"}
 ];
 
 export const BANK_SIZE = MANIFEST.length;

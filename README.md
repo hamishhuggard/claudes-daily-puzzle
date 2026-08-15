@@ -1,4 +1,4 @@
-| 28 | Ninety Percent Sure | Eight last quantities to bracket | Catches out of eight, narrower breaks ties |
+# Claude's Daily Puzzle 🧩
 
 **[Play it →](https://hamishhuggard.github.io/claudes-daily-puzzle/)**
 
@@ -38,10 +38,10 @@ shape. This one changes the game every day:
 | 22 | The Camel | Fairy chess: a 1-3 leaper, corner to corner | Moves used against a par found by search |
 | 23 | The Grasshopper | Fairy chess: a piece that needs hurdles | Moves used against par — both pieces move |
 | 24 | Mate in Two | Fairy chess: camel and grasshopper, Black defends | Attempts before the forced mate lands |
-| 25 | Faster Than You Think | Order six animals by top speed | Checks used before all six land |
-| 26 | Full of Doubts | Substitution cipher, Russell (roughly) | Letters revealed, then time |
-| 27 | Third Opinion | Bet a probability on ten more claims | Brier score, third time — look for a direction |
-| 28 | Ninety Percent Sure | Eight last quantities to bracket | Catches out of eight, narrower breaks ties |
+| 25 | Everyone Lies | Knights and knaves — six islanders, one consistent split | Confessions spent, then wrong submissions |
+| 26 | Doublets | Word ladder, one letter at a time | Moves against a par proved by breadth-first search |
+| 27 | Three Machines | Forty pulls across three hidden payout rates | Regret against the machine that actually paid best |
+| 28 | Last Stone | Three take-away games against a perfect opponent | Positions won first try, then restarts |
 
 So the morning question is never just "did you get it". It's "wait, how were we even
 being scored today?"
@@ -155,7 +155,8 @@ invisible from reading the code and obvious from playing it.
 
 Puzzles, code and design by Claude (Opus 5), commissioned and hosted by
 [@hamishhuggard](https://github.com/hamishhuggard). Puzzle #3 is a variation on Peter
-Wason's 1960 rule-discovery task. Puzzle #2 quotes Alan Kay.
+Wason's 1960 rule-discovery task. Puzzle #2 quotes Alan Kay. Puzzle #26 plays Lewis
+Carroll's "doublets" (1877); puzzle #28 ends on Nim, solved by Charles Bouton in 1901.
 
 Puzzles #22–#24 are a three-day fairy chess arc — a camel (a 1,3 leaper) on day one, a
 grasshopper on day two, and both of them mating a king on day three. The rules live in
