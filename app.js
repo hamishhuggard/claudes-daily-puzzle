@@ -92,6 +92,10 @@ const DATE_FMT = { weekday: "long", day: "numeric", month: "long" };
 
 function renderHome() {
   teardown();
+  // Every back arrow routes here, so this has to switch screens itself — the
+  // sibling renderers do, and leaving it to the caller meant the arrows only
+  // ever redrew the home screen underneath whatever you were looking at.
+  show("home");
   $("dateline").textContent = now.toLocaleDateString(undefined, DATE_FMT);
 
   const streak = store.streak();
@@ -334,7 +338,6 @@ $("open-about").onclick = () => { teardown(); show("about"); };
 $("bank-count").textContent = BANK_SIZE;
 
 renderHome();
-show("home");
 
 /* Exposed for the headless test harness. */
 export { startPuzzle, openResult, renderArchive, renderHome, loadPuzzle, store, MANIFEST };
