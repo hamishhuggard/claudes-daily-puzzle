@@ -33,7 +33,14 @@ export const MANIFEST = [
   {"n":25,"title":"Everyone Lies","blurb":"Six islanders. Every truth-teller's statements are all true; every liar's are all false. Work out who's who.","goal":"Label all six correctly — confessions and wrong submissions both cost you","emoji":"🕊️"},
   {"n":26,"title":"Doublets","blurb":"Turn one word into another, one letter at a time — every stop has to be real.","goal":"Reach the target word in as few one-letter changes as possible; par is the true shortest route","emoji":"🪜"},
   {"n":27,"title":"Three Machines","blurb":"Three slot machines, forty pulls, one budget. Find the best one before you run out.","goal":"Two rounds of forty pulls each — scored on regret against the machine that actually paid best","emoji":"🎰"},
-  {"n":28,"title":"Last Stone","blurb":"Three take-away games, one perfect opponent. Win all three, or start over.","goal":"Win each position without a restart — restarts against a perfect opponent are the score","emoji":"🪨"}
+  {"n":28,"title":"Last Stone","blurb":"Three take-away games, one perfect opponent. Win all three, or start over.","goal":"Win each position without a restart — restarts against a perfect opponent are the score","emoji":"🪨"},
+  {"n":29,"title":"Cracking the Safe","blurb":"Six symbols, four slots, no repeats. Each guess only tells you how many are locked in place and how many are loose — never which.","goal":"Crack the code in 4 guesses — that's the honest par, computed by actually solving it","emoji":"🔐"},
+  {"n":30,"title":"Paint by Numbers","blurb":"A 10x10 grid, and only the row/column clues to go on. Fill the right cells and a picture appears.","goal":"Satisfy every row and column clue — wrong fills cost you, an unfinished grid doesn't count","emoji":"🖼️"},
+  {"n":31,"title":"Odd One In","blurb":"Twelve cards. Find every trio where count, shape, shading and colour are each all the same or all different.","goal":"Find all five sets — the clock is running, wrong taps cost you","emoji":"👁️"},
+  {"n":32,"title":"Lights Out","blurb":"Tap a light to toggle it and its neighbours. Turn every light off — in as few taps as possible.","goal":"Clear both rounds at the true minimum number of taps","emoji":"💡"},
+  {"n":33,"title":"The Seam","blurb":"Five cryptic clues. Get the answer, then tap the words that are the straight definition — that seam is the whole trick.","goal":"Solve all five and correctly mark where the plain-English definition sits in each clue","emoji":"📖"},
+  {"n":34,"title":"Jumping the Pegs","blurb":"A 15-hole triangle of pegs. Jump one peg over another into an empty hole to remove it. Get down to one.","goal":"Finish with as few pegs as possible — one is the perfect score","emoji":"⚫"},
+  {"n":35,"title":"More or Less","blurb":"A 5x5 grid, no starting digits at all — just a scatter of < and > signs between cells. Fill 1-5 once per row and column.","goal":"Solve the whole grid — mistakes and hints both cost you","emoji":"🔢"}
 ];
 
 export const BANK_SIZE = MANIFEST.length;
