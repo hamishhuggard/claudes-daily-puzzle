@@ -84,6 +84,13 @@ export default {
       const cellEl = cellEls[r][c];
       cellEl.classList.toggle("nono-filled", value === FILLED);
       cellEl.classList.toggle("nono-flagged", value === FLAGGED);
+      /* The base look is an inline style, and inline beats a stylesheet rule,
+         so the fill/flag look has to be inline too: a .nono-filled class on
+         its own left a filled cell looking exactly like an empty one, which
+         made the grid unreadable. */
+      cellEl.style.background = value === FILLED ? "var(--accent)" : "var(--panel-2, rgba(255,255,255,.04))";
+      cellEl.style.borderColor = value === FILLED ? "var(--accent)" : "var(--line, rgba(255,255,255,.14))";
+      cellEl.style.color = value === FLAGGED ? "var(--muted, rgba(255,255,255,.55))" : "var(--faint)";
       cellEl.textContent = value === FLAGGED ? "×" : "";
       refreshLine(r, true);
       refreshLine(c, false);
@@ -94,7 +101,9 @@ export default {
       const clue = isRow ? rowClues[i] : colClues[i];
       const filled = line.map((v) => v === FILLED);
       const ok = JSON.stringify(lineClue(filled)) === JSON.stringify(clue);
-      (isRow ? rowClueCells[i] : colClueCells[i]).classList.toggle("nono-satisfied", ok);
+      const target = isRow ? rowClueCells[i] : colClueCells[i];
+      target.classList.toggle("nono-satisfied", ok);
+      target.style.color = ok ? "var(--accent)" : "var(--faint)";
     }
 
     for (let r = 0; r < n; r++) {
