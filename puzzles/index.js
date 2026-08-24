@@ -40,7 +40,14 @@ export const MANIFEST = [
   {"n":32,"title":"Lights Out","blurb":"Tap a light to toggle it and its neighbours. Turn every light off — in as few taps as possible.","goal":"Clear both rounds at the true minimum number of taps","emoji":"💡"},
   {"n":33,"title":"The Seam","blurb":"Five cryptic clues. Get the answer, then tap the words that are the straight definition — that seam is the whole trick.","goal":"Solve all five and correctly mark where the plain-English definition sits in each clue","emoji":"📖"},
   {"n":34,"title":"Jumping the Pegs","blurb":"A 15-hole triangle of pegs. Jump one peg over another into an empty hole to remove it. Get down to one.","goal":"Finish with as few pegs as possible — one is the perfect score","emoji":"⚫"},
-  {"n":35,"title":"More or Less","blurb":"A 5x5 grid, no starting digits at all — just a scatter of < and > signs between cells. Fill 1-5 once per row and column.","goal":"Solve the whole grid — mistakes and hints both cost you","emoji":"🔢"}
+  {"n":35,"title":"More or Less","blurb":"A 5x5 grid, no starting digits at all — just a scatter of < and > signs between cells. Fill 1-5 once per row and column.","goal":"Solve the whole grid — mistakes and hints both cost you","emoji":"🔢"},
+  {"n":36,"title":"Gridlock","blurb":"A full car park and one way out. Nothing can turn — every vehicle only slides the way it's pointing.","goal":"Free the marked vehicle from both lots in as few slides as you can — par is the true shortest escape","emoji":"🚗"},
+  {"n":37,"title":"Island Hopping","blurb":"Fifteen islands, each wanting an exact number of bridges. Straight spans, no crossings, and everything has to end up connected.","goal":"Join every island to its exact number and leave the archipelago in one piece","emoji":"🌉"},
+  {"n":38,"title":"Common Ground","blurb":"Sixteen words, four secret categories of four. Two of the words are lying to you.","goal":"Find all four categories — you get four wrong guesses and no more","emoji":"🔗"},
+  {"n":39,"title":"Safe Squares","blurb":"Minesweeper, except this board comes with a promise: it can be finished by reasoning alone. You will never have to guess.","goal":"Clear all 53 safe squares without digging a mine — mistakes are the score","emoji":"💣"},
+  {"n":40,"title":"The Warehouse","blurb":"Push the crates onto the marks. You can push. You can never pull. That asymmetry is the whole puzzle.","goal":"Get every crate home in both rooms in as few steps as you can — par is the true shortest route","emoji":"📦"},
+  {"n":41,"title":"Five Flats","blurb":"Five floors, five residents, five pets, five drinks. Ten clues, and only one arrangement fits all of them.","goal":"Fill the grid and submit — you're told whether it's right, never which cells are wrong","emoji":"🦓"},
+  {"n":42,"title":"Common Knowledge","blurb":"Ivy was told the month. Otto was told the day. Neither says a number — and by the end, you know the date.","goal":"Strike out the impossible dates and lock in the right one, three times, without a wrong lock-in","emoji":"🗝️"}
 ];
 
 export const BANK_SIZE = MANIFEST.length;

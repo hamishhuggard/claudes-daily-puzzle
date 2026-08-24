@@ -142,6 +142,9 @@
     border-radius: 11px; padding: 0 11px; height: 40px; display: grid; place-items: center;
     font-weight: 700; font-size: .92rem; flex: none;
   }
+  /* `hidden` loses to the display rule above on specificity, so a puzzle with
+     no timer was still showing 0:00. */
+  .clock[hidden] { display: none; }
   .flag {
     background: rgba(224, 190, 92, .12); border: 1px solid rgba(224, 190, 92, .3);
     color: var(--ok); border-radius: var(--r-sm); padding: 8px 12px;
@@ -262,6 +265,7 @@
     padding: 20px 18px calc(20px + env(safe-area-inset-bottom));
     display: flex; flex-direction: column; gap: 8px;
     box-shadow: 0 -20px 60px rgba(0,0,0,.6); animation: rise .25s ease both;
+    max-height: 85vh; overflow-y: auto;   /* a long option list must not run off-screen */
   }
   @keyframes rise { from { transform: translateY(100%); } }
   .sheet h3 { font-size: 1.15rem; text-align: center; margin-bottom: 6px; }
@@ -591,6 +595,200 @@
     padding: 10px 12px; text-align: center;
   }
   .ladder-input:focus { outline: none; border-color: var(--accent); }
+
+  /* ---- shared by the #36-#42 mechanics ---------------------------------- */
+  .grid-score { display: flex; gap: 8px; justify-content: center; }
+  .grid-score-cell {
+    flex: 1; max-width: 120px; text-align: center; padding: 7px 4px;
+    background: var(--panel); border: 1px solid var(--line); border-radius: var(--r-sm);
+  }
+  .grid-score-cell small { display: block; color: var(--faint); font-size: .62rem; text-transform: uppercase; letter-spacing: 1.1px; font-weight: 700; }
+  .grid-score-cell b { font-size: 1.1rem; font-variant-numeric: tabular-nums; }
+  .grid-bar { display: flex; justify-content: center; gap: 8px; flex-wrap: wrap; }
+
+  /* ---- #36 gridlock ------------------------------------------------------ */
+  .grid-board {
+    display: grid; grid-template-columns: repeat(var(--n), 1fr) 16px;
+    grid-template-rows: repeat(var(--n), 1fr);
+    gap: 3px; background: var(--panel); border: 1px solid var(--line);
+    border-radius: var(--r-md); padding: 6px;
+  }
+  /* The floor squares are what give the rows their height — the vehicles are
+     positioned on top by grid line and contribute nothing to sizing. */
+  .grid-cell { aspect-ratio: 1; background: #12151d; border: none; border-radius: 4px; padding: 0; cursor: default; }
+  .grid-cell.open { background: rgba(127,179,213,.22); box-shadow: inset 0 0 0 2px rgba(127,179,213,.55); cursor: pointer; }
+  .grid-car {
+    border: none; border-radius: 6px; padding: 0; cursor: pointer;
+    background: #46506a; box-shadow: inset 0 -3px 0 rgba(0,0,0,.28);
+    transition: transform .12s, box-shadow .12s;
+  }
+  .grid-car.sel { box-shadow: inset 0 0 0 3px var(--accent-2), inset 0 -3px 0 rgba(0,0,0,.28); }
+  .grid-car.target { background: var(--accent); }
+  .grid-car.target.sel { box-shadow: inset 0 0 0 3px #fff, inset 0 -3px 0 rgba(0,0,0,.28); }
+  .grid-exit {
+    display: flex; align-items: center; justify-content: center;
+    color: var(--accent); font-size: .95rem; font-weight: 800;
+  }
+  .grid-msg { min-height: 2.6em; }
+
+  /* ---- #37 bridges ------------------------------------------------------- */
+  .brg-board {
+    display: grid; gap: 0;
+    grid-template-columns: repeat(var(--cols), 1fr);
+    grid-template-rows: repeat(var(--rows), 1fr);
+    aspect-ratio: calc(var(--cols) / var(--rows));
+    background: var(--panel); border: 1px solid var(--line);
+    border-radius: var(--r-md); padding: 8px;
+  }
+  .brg-isle {
+    position: relative;              /* so the z-index below actually applies */
+    place-self: center; width: 82%; aspect-ratio: 1; border-radius: 50%;
+    background: #2a3040; border: 2px solid #414a60; color: var(--text);
+    font-size: min(3.6vw, .95rem); font-weight: 800; cursor: pointer; z-index: 2;
+    font-variant-numeric: tabular-nums; padding: 0;
+  }
+  /* These backgrounds must stay fully opaque — the discs are what hide the
+     ends of the bridge lines running underneath them. */
+  .brg-isle.full { border-color: var(--good); color: #b6e6bf; background: #24402f; }
+  .brg-isle.over { border-color: var(--bad); color: #f0b5ac; background: #43241f; }
+  .brg-isle.sel { border-color: var(--accent); background: #4a2d1e; color: var(--text); transform: scale(1.08); }
+  .brg-link { position: relative; display: flex; align-items: center; justify-content: center; z-index: 1; }
+  .brg-link.h { flex-direction: column; }
+  .brg-link.v { flex-direction: row; }
+  .brg-link i { background: var(--accent-2); display: block; border-radius: 1px; }
+  .brg-link.h i { width: 100%; height: 2px; }
+  .brg-link.v i { height: 100%; width: 2px; }
+  .brg-link.h i:first-child { margin-bottom: 3px; }
+  .brg-link.v i:first-child { margin-right: 3px; }
+  .brg-link:not(.dbl) i:first-child { display: none; }
+  .brg-link:not(.dbl).h i:last-child { margin-top: -1px; }
+  .brg-link.hinted i { background: var(--ok); }
+  .brg-msg { min-height: 3.2em; }
+
+  /* ---- #38 groups -------------------------------------------------------- */
+  .grp-lives { display: flex; align-items: center; justify-content: center; gap: 6px; }
+  .grp-lives small { color: var(--faint); font-size: .68rem; text-transform: uppercase; letter-spacing: 1.2px; font-weight: 700; margin-right: 4px; }
+  .grp-lives i { width: 9px; height: 9px; border-radius: 50%; background: var(--accent); }
+  .grp-lives i.gone { background: var(--line); }
+  .grp-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; }
+  .grp-tile {
+    aspect-ratio: 1.15; padding: 3px; border-radius: var(--r-sm);
+    background: var(--panel-2); border: 1px solid var(--line); color: var(--text);
+    font-size: min(2.9vw, .72rem); font-weight: 800; letter-spacing: .2px;
+    cursor: pointer; word-break: break-word; text-transform: uppercase;
+  }
+  .grp-tile.sel { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
+  .grp-band {
+    border-radius: var(--r-sm); padding: 9px 10px; text-align: center;
+    display: flex; flex-direction: column; gap: 3px;
+  }
+  .grp-band b { font-size: .82rem; letter-spacing: .3px; }
+  .grp-band span { font-size: .72rem; opacity: .85; }
+  .grp-band.g0 { background: rgba(224,190,92,.22); border: 1px solid rgba(224,190,92,.5); }
+  .grp-band.g1 { background: rgba(125,201,138,.2); border: 1px solid rgba(125,201,138,.5); }
+  .grp-band.g2 { background: rgba(127,179,213,.2); border: 1px solid rgba(127,179,213,.5); }
+  .grp-band.g3 { background: rgba(232,130,90,.2); border: 1px solid rgba(232,130,90,.5); }
+  .grp-msg { min-height: 2.8em; }
+
+  /* ---- #39 sweep --------------------------------------------------------- */
+  .swp-board {
+    display: grid; grid-template-columns: repeat(var(--cols), 1fr); gap: 2px;
+    background: var(--panel); border: 1px solid var(--line);
+    border-radius: var(--r-md); padding: 6px;
+  }
+  .swp-cell {
+    aspect-ratio: 1; border-radius: 3px; padding: 0; cursor: pointer;
+    background: #39405480; border: 1px solid #4a5268;
+    font-size: min(3.4vw, .88rem); font-weight: 800; color: var(--text);
+    font-variant-numeric: tabular-nums;
+  }
+  .swp-cell.open { background: #12151d; border-color: #232838; cursor: default; }
+  .swp-cell.flag { background: rgba(232,130,90,.18); border-color: var(--accent); }
+  .swp-cell.boom { background: rgba(224,106,90,.3); border-color: var(--bad); }
+  .swp-cell.revealed { background: rgba(224,190,92,.16); border-color: rgba(224,190,92,.5); }
+  .swp-cell[data-n="1"] { color: #7fb3d5; }
+  .swp-cell[data-n="2"] { color: #7dc98a; }
+  .swp-cell[data-n="3"] { color: #e8825a; }
+  .swp-cell[data-n="4"] { color: #b79ce8; }
+  .swp-cell[data-n="5"] { color: #e0be5c; }
+  .swp-cell[data-n="6"] { color: #6fd0c8; }
+  .swp-msg { min-height: 2.6em; }
+
+  /* ---- #40 crates -------------------------------------------------------- */
+  .crt-board {
+    display: grid; grid-template-columns: repeat(var(--cols), 1fr); gap: 2px;
+    background: var(--panel); border: 1px solid var(--line);
+    border-radius: var(--r-md); padding: 8px; max-width: 340px; margin: 0 auto; width: 100%;
+  }
+  .crt-cell {
+    aspect-ratio: 1; border-radius: 4px; background: #12151d;
+    display: flex; align-items: center; justify-content: center;
+    font-size: min(5vw, 1.15rem); line-height: 1;
+  }
+  .crt-cell.wall { background: #39405e; border-radius: 2px; }
+  .crt-cell.goal { color: var(--ok); box-shadow: inset 0 0 0 2px rgba(224,190,92,.4); }
+  .crt-cell.crate { background: #7a5c3c; color: #f0dfc8; box-shadow: inset 0 -3px 0 rgba(0,0,0,.3); }
+  .crt-cell.crate.done { background: var(--good); color: #10240f; }
+  .crt-cell.worker { color: var(--accent-2); font-weight: 800; }
+  .crt-pad {
+    display: grid; grid-template-columns: repeat(3, 52px); grid-template-rows: repeat(2, 46px);
+    gap: 6px; justify-content: center;
+  }
+  .crt-key {
+    border-radius: var(--r-sm); background: var(--panel-2); border: 1px solid var(--line);
+    color: var(--text); font-size: 1.15rem; cursor: pointer; padding: 0;
+  }
+  .crt-key:hover { background: var(--line); }
+  .crt-key.up { grid-column: 2; grid-row: 1; }
+  .crt-key.left { grid-column: 1; grid-row: 2; }
+  .crt-key.down { grid-column: 2; grid-row: 2; }
+  .crt-key.right { grid-column: 3; grid-row: 2; }
+  .crt-msg { min-height: 2.8em; }
+
+  /* ---- #41 zebra --------------------------------------------------------- */
+  .zeb-grid {
+    display: grid; grid-template-columns: 54px repeat(3, 1fr); gap: 3px;
+  }
+  .zeb-head { color: var(--faint); font-size: .6rem; text-transform: uppercase; letter-spacing: 1px; font-weight: 800; text-align: center; padding-bottom: 2px; }
+  .zeb-floor { display: flex; align-items: center; color: var(--muted); font-size: .68rem; font-weight: 700; }
+  .zeb-cell {
+    padding: 9px 3px; border-radius: var(--r-sm); background: var(--panel-2);
+    border: 1px solid var(--line); color: var(--text);
+    font-size: min(2.7vw, .68rem); font-weight: 600; cursor: pointer; word-break: break-word;
+  }
+  .zeb-cell.empty { color: var(--faint); }
+  .zeb-cell.right { border-color: rgba(125,201,138,.5); background: rgba(125,201,138,.1); }
+  .zeb-sheet .option small { color: var(--faint); font-size: .68rem; }
+  .zeb-sheet .option.chosen { border-color: var(--accent); background: rgba(232,130,90,.12); }
+  .zeb-clues { display: flex; flex-direction: column; gap: 5px; }
+  .zeb-clue {
+    display: flex; gap: 9px; align-items: baseline; padding: 7px 10px;
+    background: var(--panel); border: 1px solid var(--line); border-radius: var(--r-sm);
+  }
+  .zeb-clue b { color: var(--accent); font-size: .7rem; flex: none; font-variant-numeric: tabular-nums; }
+  .zeb-clue span { font-size: .82rem; line-height: 1.45; color: var(--muted); }
+  .zeb-msg { min-height: 2.6em; }
+
+  /* ---- #42 knowing ------------------------------------------------------- */
+  .knw-board { display: flex; flex-direction: column; gap: 6px; }
+  .knw-row { display: flex; align-items: center; gap: 9px; }
+  .knw-rowlabel { color: var(--muted); font-size: .74rem; font-weight: 800; width: 58px; flex: none; }
+  .knw-cells { display: flex; gap: 5px; flex-wrap: wrap; flex: 1; }
+  .knw-cand {
+    padding: 7px 10px; border-radius: var(--r-sm); background: var(--panel-2);
+    border: 1px solid var(--line); color: var(--text); font-size: .78rem;
+    font-weight: 700; cursor: pointer;
+  }
+  .knw-cand.out { color: var(--faint); background: transparent; text-decoration: line-through; opacity: .55; }
+  .knw-cand.answer { border-color: var(--good); background: rgba(125,201,138,.16); color: var(--good); text-decoration: none; opacity: 1; }
+  .knw-convo { display: flex; flex-direction: column; gap: 6px; }
+  .knw-line {
+    padding: 8px 11px; background: var(--panel); border: 1px solid var(--line);
+    border-left: 3px solid var(--accent-2); border-radius: var(--r-sm);
+    font-size: .84rem; line-height: 1.5; color: var(--muted); font-style: italic;
+  }
+  .knw-line b { color: var(--text); font-style: normal; }
+  .knw-msg { min-height: 2.6em; }
 </style>
 </head>
 <body>
