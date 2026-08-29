@@ -193,7 +193,7 @@ export default {
     function finishMate() {
       over = true;
       api.finish({
-        headline: attempts === 0 ? "Mate, first try" : `Mate after ${attempts + 1} attempts`,
+        headline: attempts === 0 ? "Mate, first try" : `Mate in ${attempts + 1} attempts`,
         squares: "❌".repeat(Math.min(attempts, 20)) + "✅",
         stats: [
           ["Attempts", String(attempts + 1)],

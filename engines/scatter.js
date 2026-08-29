@@ -193,7 +193,7 @@ export default {
       const worst = answers.reduce((a, x) => (x.err > a.err ? x : a), answers[0]);
 
       api.finish({
-        headline: `${total.toFixed(2)} total error across six plots`,
+        headline: `${total.toFixed(2)} total error`,
         squares: answers.map((a) => grade(a.err).sq).join(""),
         stats: [
           ["Total error", total.toFixed(2)],

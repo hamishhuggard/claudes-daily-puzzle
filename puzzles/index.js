@@ -47,7 +47,10 @@ export const MANIFEST = [
   {"n":39,"title":"Safe Squares","blurb":"Minesweeper, except this board comes with a promise: it can be finished by reasoning alone. You will never have to guess.","goal":"Clear all 53 safe squares without digging a mine — mistakes are the score","emoji":"💣"},
   {"n":40,"title":"The Warehouse","blurb":"Push the crates onto the marks. You can push. You can never pull. That asymmetry is the whole puzzle.","goal":"Get every crate home in both rooms in as few steps as you can — par is the true shortest route","emoji":"📦"},
   {"n":41,"title":"Five Flats","blurb":"Five floors, five residents, five pets, five drinks. Ten clues, and only one arrangement fits all of them.","goal":"Fill the grid and submit — you're told whether it's right, never which cells are wrong","emoji":"🦓"},
-  {"n":42,"title":"Common Knowledge","blurb":"Ivy was told the month. Otto was told the day. Neither says a number — and by the end, you know the date.","goal":"Strike out the impossible dates and lock in the right one, three times, without a wrong lock-in","emoji":"🗝️"}
+  {"n":42,"title":"Common Knowledge","blurb":"Ivy was told the month. Otto was told the day. Neither says a number — and by the end, you know the date.","goal":"Strike out the impossible dates and lock in the right one, three times, without a wrong lock-in","emoji":"🗝️"},
+  {"n":43,"title":"Two Fences","blurb":"Numbers count the sides a fence uses — but the answer is two separate closed loops, never one.","goal":"Close both grids into exactly two loops — hints and wrong closures are the score","emoji":"🚧"},
+  {"n":44,"title":"Corner Pitch","blurb":"Every tree wants a tent diagonally from it. Tents may stand side by side — but never corner to corner.","goal":"Pitch both camps correctly — hints and wrong pitches are the score","emoji":"⛺"},
+  {"n":45,"title":"Sonar","blurb":"A fleet is hidden in the sea. Four buoys, each reporting how many ship squares are near it — never which.","goal":"Find the whole fleet — hints and wrong fleets are the score","emoji":"🚢"}
 ];
 
 export const BANK_SIZE = MANIFEST.length;

@@ -45,6 +45,18 @@ before decoding blobs or auditing engines. That has been the answer every time.
 
 - **A fresh mechanic every day.** Reusing a format is not acceptable, even with new
   content.
+- **Original formats, not ports.** A different mechanic from yesterday is not enough
+  — it must also not be a puzzle that already exists. Slitherlink, Sokoban, Hashi,
+  Minesweeper and friends are out. **Variants are explicitly welcome**: take a known
+  skeleton and change a rule so the strategy changes, not just the theme. #43 asks
+  for two closed loops instead of one; #44 makes every adjacency diagonal; #45
+  replaces revealed squares with sonar readings. Say in the note what changed and why
+  it changes how you play.
+- **The share card is four lines.** It gets pasted into a group chat, so `shareText()`
+  emits title / result / squares / link and nothing else. Write `headline` as a short
+  fragment. `r.extra` badges never reach the paste.
+- **Author's notes: 120–150 words.** Keep the insight or the honest admission; cut the
+  build diary, the seed counts, and any restatement of rules the player just learned.
 - **Puzzles must not be calculable** — no mechanic that rewards grinding arithmetic.
 - Par values must be *computed by actually solving the puzzle*, not estimated.
 - Answers being publicly readable in the repo is accepted. Just keep the GitHub link

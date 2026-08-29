@@ -164,7 +164,7 @@ export default {
       const avgRegretPct = totalOracle > 0 ? totalRegret / totalOracle : 0;
 
       api.finish({
-        headline: `${totalEarned} credits earned, ${totalRegret} of regret against the oracle`,
+        headline: `${totalEarned} credits · ${totalRegret} regret`,
         squares: roundResults.map((r) => r.g.sq).join(""),
         stats: [
           ["Total earned", String(totalEarned)],

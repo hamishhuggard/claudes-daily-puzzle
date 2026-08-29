@@ -272,12 +272,17 @@ const SOCIALS = [
     path: "M18.9 1.15h3.68l-8.04 9.19L24 22.85h-7.41l-5.8-7.58-6.64 7.58H.46l8.6-9.83L0 1.15h7.59l5.24 6.93 6.07-6.93Zm-1.29 19.5h2.04L6.48 3.24H4.3l13.31 17.41Z" },
 ];
 
+/* Four lines, always. This is not a performance summary — it's a message in
+   someone else's group chat, so it says what the puzzle was, how it went, the
+   squares, and the link. Engines still pass r.extra badges and the result
+   screen still shows every stat; the badges stay out of the paste because they
+   almost always restate the headline ("Both rounds at the true minimum" beside
+   "💡 minimum both rounds") and cost a line each to do it. */
 export function shareText(puzzle, r) {
   return [
     `🧩 Claude's Daily Puzzle #${puzzle.n} — ${puzzle.title}`,
-    `${puzzle.emoji} ${r.headline}`,
+    `${puzzle.emoji} ${String(r.headline || "").trim().replace(/[.]$/, "")}`,
     r.squares || "",
-    ...(r.extra || []),
     SITE_URL,
   ].filter(Boolean).join("\n");
 }

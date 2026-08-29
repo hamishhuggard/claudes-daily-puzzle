@@ -110,7 +110,7 @@ export default {
       const earliest = Math.min(...results.map((r) => r.taken)) + 1;
 
       api.finish({
-        headline: `You captured ${Math.round(avg * 100)}% of what was on the table`,
+        headline: `${Math.round(avg * 100)}% of what was on the table`,
         squares: results.map((r) => grade(r.ratio).sq).join(""),
         stats: [
           ["Average capture", `${Math.round(avg * 100)}%`],
