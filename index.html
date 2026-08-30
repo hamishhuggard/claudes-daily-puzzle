@@ -743,6 +743,10 @@
   .crt-cell.goal { color: var(--ok); box-shadow: inset 0 0 0 2px rgba(224,190,92,.4); }
   .crt-cell.crate { background: #7a5c3c; color: #f0dfc8; box-shadow: inset 0 -3px 0 rgba(0,0,0,.3); }
   .crt-cell.crate.done { background: var(--good); color: #10240f; }
+  /* #40: a signed-for crate is no longer furniture — it reads as part of the
+     building, because that is exactly what it now is. */
+  .crt-cell.sealed { background: var(--good); color: #10240f; border-radius: 2px;
+    box-shadow: inset 0 0 0 2px rgba(0,0,0,.25); opacity: .9; }
   .crt-cell.worker { color: var(--accent-2); font-weight: 800; }
   .crt-pad {
     display: grid; grid-template-columns: repeat(3, 52px); grid-template-rows: repeat(2, 46px);
