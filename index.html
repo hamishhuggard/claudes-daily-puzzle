@@ -785,6 +785,15 @@
   }
   .zeb-clue b { color: var(--accent); font-size: .7rem; flex: none; font-variant-numeric: tabular-nums; }
   .zeb-clue span { font-size: .82rem; line-height: 1.45; color: var(--muted); }
+  /* #41: the clues are the board too — one of them is false and gets accused. */
+  .zeb-clue.accusable { width: 100%; text-align: left; cursor: pointer; color: inherit; }
+  .zeb-clue.accused { border-color: var(--accent); background: rgba(232,130,90,.12); }
+  .zeb-clue.liar { border-color: var(--bad); background: rgba(224,106,90,.16); }
+  .zeb-clue em {
+    margin-left: auto; flex: none; font-style: normal; font-size: .64rem;
+    font-weight: 800; letter-spacing: .4px; text-transform: uppercase; color: var(--accent);
+  }
+  .zeb-clue.liar em { color: var(--bad); }
   .zeb-msg { min-height: 2.6em; }
 
   /* ---- #42 knowing ------------------------------------------------------- */
