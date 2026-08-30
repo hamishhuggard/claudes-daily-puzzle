@@ -52,7 +52,8 @@ export const MANIFEST = [
   {"n":44,"title":"Corner Pitch","blurb":"Every tree wants a tent diagonally from it. Tents may stand side by side — but never corner to corner.","goal":"Pitch both camps correctly — hints and wrong pitches are the score","emoji":"⛺"},
   {"n":45,"title":"Sonar","blurb":"A fleet is hidden in the sea. Four buoys, each reporting how many ship squares are near it — never which.","goal":"Find the whole fleet — hints and wrong fleets are the score","emoji":"🚢"},
   {"n":46,"title":"The Long Game","blurb":"Four opponents, eight rounds each, and a roster of eight strategies. Work out which one you're facing — while playing it.","goal":"Name all four opponents and score as many points as you can — par is 107","emoji":"🤝"},
-  {"n":47,"title":"The Fence Bill","blurb":"Cut the field into eight rectangles, one number in each. The number is the fence around it, not the land inside it.","goal":"Cover every square — hints and take-backs are the score","emoji":"📐"}
+  {"n":47,"title":"The Fence Bill","blurb":"Cut the field into eight rectangles, one number in each. The number is the fence around it, not the land inside it.","goal":"Cover every square — hints and take-backs are the score","emoji":"📐"},
+  {"n":48,"title":"Two Shadows","blurb":"Stack cubes in the yard so it casts both shadows — and use as few cubes as you can get away with.","goal":"Cast both shadows exactly — par is 20 cubes, and it is the true minimum","emoji":"🧱"}
 ];
 
 export const BANK_SIZE = MANIFEST.length;

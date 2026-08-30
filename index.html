@@ -796,6 +796,39 @@
   .zeb-clue.liar em { color: var(--bad); }
   .zeb-msg { min-height: 2.6em; }
 
+  /* ---- #48 blocks -------------------------------------------------------- */
+  .blk-board {
+    display: grid; grid-template-columns: repeat(var(--cols), 1fr); gap: 3px;
+    background: var(--panel); border: 1px solid var(--line);
+    border-radius: var(--r-md); padding: 8px; max-width: 340px;
+    margin: 0 auto; width: 100%;
+  }
+  .blk-corner { aspect-ratio: 1; }
+  .blk-target {
+    aspect-ratio: 1; display: flex; align-items: center; justify-content: center;
+    font-size: min(3.6vw, .92rem); font-weight: 800; color: var(--muted);
+    font-variant-numeric: tabular-nums; border-radius: 4px;
+  }
+  .blk-target.met { color: var(--good); background: rgba(125,201,138,.14); }
+  .blk-cell {
+    aspect-ratio: 1; padding: 0; border-radius: 4px; cursor: pointer;
+    background: #12151d; border: 1px solid #232838; color: var(--text);
+    font-size: min(3.6vw, .92rem); font-weight: 800;
+    font-variant-numeric: tabular-nums;
+  }
+  /* Taller stacks read as heavier, so the shape of the answer is visible at a
+     glance rather than only readable digit by digit. */
+  .blk-cell.h1 { background: rgba(127,179,213,.18); }
+  .blk-cell.h2 { background: rgba(127,179,213,.34); }
+  .blk-cell.h3 { background: rgba(127,179,213,.5); }
+  .blk-cell.h4 { background: rgba(127,179,213,.68); color: #0d1117; }
+  .blk-cell.h5 { background: rgba(127,179,213,.85); color: #0d1117; }
+  .blk-cell.paved {
+    background: repeating-linear-gradient(45deg, #2b3145 0 4px, #232838 4px 8px);
+    border-color: #39405e; cursor: default;
+  }
+  .blk-msg { min-height: 2.8em; }
+
   /* ---- #47 frames -------------------------------------------------------- */
   .frm-board {
     display: grid; grid-template-columns: repeat(var(--cols), 1fr); gap: 2px;
