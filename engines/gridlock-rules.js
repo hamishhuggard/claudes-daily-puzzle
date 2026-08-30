@@ -58,6 +58,22 @@ export function movesFrom(vs, size) {
   return out;
 }
 
+/* ONE-WAY STREETS: every vehicle carries an arrow and may only ever slide the
+   way it points — never back. That makes the lot monotone: no move can be
+   taken back by the rules (the Undo button is a kindness, not a rule), so the
+   order you move things in is the entire puzzle and a lot can be ruined
+   outright rather than merely tangled. A vehicle that has served its purpose
+   and slid past the square you needed is gone for good.
+
+   Vehicles carry `dir` as +1 (right / down) or -1 (left / up). A vehicle with
+   no `dir` is unrestricted, which is what keeps the ordinary lots working. */
+export function onewayMoves(vs, size) {
+  return movesFrom(vs, size).filter((m) => {
+    const d = vs[m.car].dir;
+    return d == null || Math.sign(m.delta) === Math.sign(d);
+  });
+}
+
 export function applyMove(vs, m) {
   return vs.map((v, i) => {
     if (i !== m.car) return v;
@@ -74,8 +90,10 @@ export function isSolved(vs, size) {
 }
 
 /* Shortest escape, by breadth-first search over every reachable arrangement.
-   Returns { moves, path, explored }, or null if the lot is a true deadlock. */
-export function solve(vehicles, size) {
+   `moveGen` decides which slides count as legal — pass slideMoves for an icy
+   lot, where par is genuinely different because most positions are simply
+   unreachable. Returns { moves, path, explored }, or null for a deadlock. */
+export function solve(vehicles, size, moveGen = movesFrom) {
   if (isSolved(vehicles, size)) return { moves: 0, path: [], explored: 1 };
   const start = stateOf(vehicles).join(",");
   const seen = new Map([[start, null]]);
@@ -86,7 +104,7 @@ export function solve(vehicles, size) {
     const next = [];
     for (const st of frontier) {
       const vs = withState(vehicles, st);
-      for (const m of movesFrom(vs, size)) {
+      for (const m of moveGen(vs, size)) {
         const nvs = applyMove(vs, m);
         const key = stateOf(nvs).join(",");
         if (seen.has(key)) continue;

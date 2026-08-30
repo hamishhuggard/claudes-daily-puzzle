@@ -1,13 +1,19 @@
 import { el } from "./shared.js";
-import { occupancy, movesFrom, applyMove, isSolved, solve } from "./gridlock-rules.js";
+import { occupancy, movesFrom, onewayMoves, applyMove, isSolved, solve } from "./gridlock-rules.js";
 
 /* ============================================================================
    GRIDLOCK — "the car park"
    ----------------------------------------------------------------------------
-   Sliding-block escape. Tap a vehicle to pick it up, tap a highlighted square
-   to slide it there. Vehicles only move along their own length and never pass
-   through each other; the marked vehicle has to reach the gap in the right
-   wall.
+   Sliding-block escape on ONE-WAY STREETS. Every vehicle carries an arrow and
+   may only ever slide the way it points — never back. Tap a vehicle to pick it
+   up, tap a highlighted square to slide it there.
+
+   That single rule is what makes this its own puzzle rather than a car-park
+   shuffle. The lot is monotone: nothing can be undone by the rules, so the
+   order you move things in is the whole problem, and a lot can be ruined
+   outright rather than merely tangled. A vehicle that has slid past the square
+   you needed is gone. Undo and Reset exist as a kindness to the player, not as
+   part of the puzzle — par counts moves, not regrets.
 
    Par is not an opinion. On mount, the engine runs the same breadth-first
    search the authoring tool ran (gridlock-rules.js: solve) over every
@@ -25,8 +31,11 @@ export default {
 
   mount(root, puzzle, api) {
     const lots = puzzle.data.lots;
+    // A lot whose vehicles carry arrows is played one-way; one without them is
+    // the unrestricted game, so old lots keep working unchanged.
+    const genFor = (lot) => (lot.vehicles.some((v) => v.dir != null) ? onewayMoves : movesFrom);
     const pars = lots.map((lot) => {
-      const s = solve(lot.vehicles, lot.size);
+      const s = solve(lot.vehicles, lot.size, genFor(lot));
       if (!s) throw new Error("gridlock: lot has no solution");
       return s.moves;
     });
@@ -52,7 +61,7 @@ export default {
     function targets() {
       if (sel == null) return new Map();
       const out = new Map();
-      for (const m of movesFrom(vs, lots[li].size)) {
+      for (const m of genFor(lots[li])(vs, lots[li].size)) {
         if (m.car !== sel) continue;
         const v = vs[sel];
         const [r, c] = v.horiz
@@ -117,8 +126,17 @@ export default {
         car.style.gridColumn = `${v.c + 1} / span ${v.horiz ? v.len : 1}`;
         car.style.gridRow = `${v.r + 1} / span ${v.horiz ? 1 : v.len}`;
         car.disabled = over;
+        // The arrow is the rule, so it has to be on the vehicle itself.
+        const arrow = v.dir == null ? "" : v.horiz ? (v.dir > 0 ? "→" : "←") : (v.dir > 0 ? "↓" : "↑");
+        if (arrow) {
+          const a = el("span", "grid-arrow", arrow);
+          a.style.opacity = ".75";
+          a.style.fontSize = "13px";
+          car.appendChild(a);
+        }
         car.setAttribute("aria-label",
-          i === 0 ? "the vehicle you're freeing" : `vehicle ${i}, length ${v.len}`);
+          (i === 0 ? "the vehicle you're freeing" : `vehicle ${i}, length ${v.len}`)
+          + (arrow ? `, one-way ${v.horiz ? (v.dir > 0 ? "right" : "left") : (v.dir > 0 ? "down" : "up")}` : ""));
         car.onclick = () => { sel = sel === i ? null : i; render(); };
         board.appendChild(car);
       });
@@ -194,8 +212,8 @@ export default {
 
       api.finish({
         headline: overPar === 0
-          ? `Both lots at par — ${moves} moves, not one wasted`
-          : `${moves} moves against a par of ${par}`,
+          ? `${moves} moves, par ${par} — not one wasted`
+          : `${moves} moves, par ${par}`,
         squares,
         stats: [
           ["Moves", String(moves)],
