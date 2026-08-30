@@ -87,10 +87,21 @@ export default {
 
       // The floor: one tappable square per cell, so a slide is "tap where you
       // want the nose to end up".
+      //
+      // Every square is placed by explicit grid line rather than left to
+      // auto-placement, and it has to be. The board carries an extra 16px
+      // column for the exit arrow, so auto-flow would wrap `size` squares into
+      // a `size + 1` wide grid and shear every row after the first; and since
+      // the vehicles below are explicitly placed, the grid algorithm positions
+      // them first and flows the leftover squares around them, shifting things
+      // again. Either way the square that lights up stops being the square the
+      // move actually leads to.
       for (let rr = 0; rr < size; rr++) {
         for (let cc = 0; cc < size; cc++) {
           const key = `${rr},${cc}`;
           const cell = el("button", "grid-cell" + (tgt.has(key) ? " open" : ""));
+          cell.style.gridRow = `${rr + 1}`;
+          cell.style.gridColumn = `${cc + 1}`;
           cell.disabled = !tgt.has(key) || over;
           cell.onclick = () => { doMove(tgt.get(key)); };
           board.appendChild(cell);
