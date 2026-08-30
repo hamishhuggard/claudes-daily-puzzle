@@ -796,6 +796,42 @@
   .zeb-clue.liar em { color: var(--bad); }
   .zeb-msg { min-height: 2.6em; }
 
+  /* ---- #46 dilemma ------------------------------------------------------- */
+  .dil-tape {
+    display: flex; flex-direction: column; gap: 5px; padding: 10px;
+    background: var(--panel); border: 1px solid var(--line); border-radius: var(--r-md);
+  }
+  .dil-row { display: flex; align-items: center; gap: 4px; }
+  .dil-rowlabel { color: var(--muted); font-size: .68rem; font-weight: 800; width: 40px; flex: none; }
+  .dil-move {
+    position: relative; flex: 1; aspect-ratio: 1; max-width: 34px; border-radius: 4px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: .78rem; font-weight: 800; background: #12151d; color: var(--muted);
+  }
+  .dil-move.coop { background: rgba(125,201,138,.18); color: var(--good); }
+  .dil-move.defect { background: rgba(224,106,90,.2); color: var(--bad); }
+  .dil-move.blank { opacity: .35; }
+  .dil-pts {
+    position: absolute; bottom: -2px; right: 2px; font-style: normal;
+    font-size: .5rem; font-weight: 700; opacity: .75;
+  }
+  .dil-roster { display: flex; flex-direction: column; gap: 5px; }
+  .dil-strat {
+    display: flex; flex-wrap: wrap; gap: 3px 8px; align-items: baseline; width: 100%;
+    text-align: left; padding: 7px 10px; color: inherit;
+    background: var(--panel); border: 1px solid var(--line); border-radius: var(--r-sm);
+  }
+  .dil-strat b { font-size: .78rem; }
+  .dil-strat span { font-size: .74rem; line-height: 1.4; color: var(--muted); flex: 1 1 100%; }
+  .dil-strat.picked { border-color: var(--accent); background: rgba(232,130,90,.12); }
+  .dil-strat.truth { border-color: var(--good); background: rgba(125,201,138,.14); }
+  .dil-strat.spent { opacity: .45; }
+  .dil-strat em {
+    font-style: normal; font-size: .6rem; font-weight: 800; letter-spacing: .4px;
+    text-transform: uppercase; color: var(--muted);
+  }
+  .dil-msg { min-height: 3.2em; }
+
   /* ---- #42 knowing ------------------------------------------------------- */
   .knw-board { display: flex; flex-direction: column; gap: 6px; }
   .knw-row { display: flex; align-items: center; gap: 9px; }

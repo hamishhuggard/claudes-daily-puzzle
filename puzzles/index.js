@@ -50,7 +50,8 @@ export const MANIFEST = [
   {"n":42,"title":"How Many Left","blurb":"Ivy was told the month. Otto was told the day. Neither says a number — except how many dates they're down to.","goal":"Strike out the impossible dates and lock in the right one, three times, without a wrong lock-in","emoji":"🗣️"},
   {"n":43,"title":"Two Fences","blurb":"Numbers count the sides a fence uses — but the answer is two separate closed loops, never one.","goal":"Close both grids into exactly two loops — hints and wrong closures are the score","emoji":"🚧"},
   {"n":44,"title":"Corner Pitch","blurb":"Every tree wants a tent diagonally from it. Tents may stand side by side — but never corner to corner.","goal":"Pitch both camps correctly — hints and wrong pitches are the score","emoji":"⛺"},
-  {"n":45,"title":"Sonar","blurb":"A fleet is hidden in the sea. Four buoys, each reporting how many ship squares are near it — never which.","goal":"Find the whole fleet — hints and wrong fleets are the score","emoji":"🚢"}
+  {"n":45,"title":"Sonar","blurb":"A fleet is hidden in the sea. Four buoys, each reporting how many ship squares are near it — never which.","goal":"Find the whole fleet — hints and wrong fleets are the score","emoji":"🚢"},
+  {"n":46,"title":"The Long Game","blurb":"Four opponents, eight rounds each, and a roster of eight strategies. Work out which one you're facing — while playing it.","goal":"Name all four opponents and score as many points as you can — par is 107","emoji":"🤝"}
 ];
 
 export const BANK_SIZE = MANIFEST.length;
