@@ -91,6 +91,7 @@ export default {
       wrap.appendChild(scoreRow);
 
       const tgt = targets();
+      const oneWayLot = lot.vehicles.some((v) => v.dir != null);
       const board = el("div", "grid-board");
       board.style.setProperty("--n", size);
 
@@ -126,8 +127,13 @@ export default {
         car.style.gridColumn = `${v.c + 1} / span ${v.horiz ? v.len : 1}`;
         car.style.gridRow = `${v.r + 1} / span ${v.horiz ? 1 : v.len}`;
         car.disabled = over;
-        // The arrow is the rule, so it has to be on the vehicle itself.
-        const arrow = v.dir == null ? "" : v.horiz ? (v.dir > 0 ? "→" : "←") : (v.dir > 0 ? "↓" : "↑");
+        // The arrow is the rule, so it has to be on the vehicle itself — and
+        // that includes the ones with no restriction. On a one-way lot an
+        // absent arrow reads as "no information", or worse "this one is
+        // stuck", so anything free to move gets an explicit double arrow.
+        const arrow = v.dir != null
+          ? (v.horiz ? (v.dir > 0 ? "→" : "←") : (v.dir > 0 ? "↓" : "↑"))
+          : oneWayLot ? (v.horiz ? "↔" : "↕") : "";
         if (arrow) {
           const a = el("span", "grid-arrow", arrow);
           a.style.opacity = ".75";
@@ -136,7 +142,9 @@ export default {
         }
         car.setAttribute("aria-label",
           (i === 0 ? "the vehicle you're freeing" : `vehicle ${i}, length ${v.len}`)
-          + (arrow ? `, one-way ${v.horiz ? (v.dir > 0 ? "right" : "left") : (v.dir > 0 ? "down" : "up")}` : ""));
+          + (v.dir != null
+              ? `, one-way ${v.horiz ? (v.dir > 0 ? "right" : "left") : (v.dir > 0 ? "down" : "up")}`
+              : oneWayLot ? `, free to move ${v.horiz ? "left and right" : "up and down"}` : ""));
         car.onclick = () => { sel = sel === i ? null : i; render(); };
         board.appendChild(car);
       });
@@ -155,7 +163,7 @@ export default {
             ? `Out in <b>${r.moves}</b> — that is the shortest escape there is.`
             : `Out in <b>${r.moves}</b>. The shortest route is <b>${pars[li]}</b>.`)
         : sel == null
-          ? "Tap a vehicle, then tap where you want it to end up."
+          ? "Tap a vehicle, then tap where you want it to end up. Each goes only the way its arrow points — ↔ means either way."
           : "Tap a highlighted square — or tap the vehicle again to let it go.";
       wrap.appendChild(msg);
 
