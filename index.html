@@ -617,11 +617,24 @@
      positioned on top by grid line and contribute nothing to sizing. */
   .grid-cell { aspect-ratio: 1; background: #12151d; border: none; border-radius: 4px; padding: 0; cursor: default; }
   .grid-cell.open { background: rgba(127,179,213,.22); box-shadow: inset 0 0 0 2px rgba(127,179,213,.55); cursor: pointer; }
+  /* Vehicles sit above the floor squares they cover. Both are unpositioned
+     grid items and the vehicles come later in the DOM, which ought to be
+     enough — it isn't: the squares won the hit test across most of each
+     vehicle, leaving only a thin strip down the middle clickable. Explicit
+     stacking is the fix, and it says the intent out loud. */
   .grid-car {
     border: none; border-radius: 6px; padding: 0; cursor: pointer;
     background: #46506a; box-shadow: inset 0 -3px 0 rgba(0,0,0,.28);
     transition: transform .12s, box-shadow .12s;
     display: grid; place-items: center; color: #e8ecf5;
+    position: relative; z-index: 2;
+  }
+  /* The arrow is the rule made visible, so it wants to be readable at a
+     glance. pointer-events: none keeps every tap landing on the vehicle
+     itself rather than on the glyph. */
+  .grid-arrow {
+    font-size: clamp(16px, 5vw, 24px); line-height: 1; opacity: .85;
+    pointer-events: none; font-weight: 700;
   }
   .grid-car.sel { box-shadow: inset 0 0 0 3px var(--accent-2), inset 0 -3px 0 rgba(0,0,0,.28); }
   .grid-car.target { background: var(--accent); }

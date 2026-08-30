@@ -135,10 +135,7 @@ export default {
           ? (v.horiz ? (v.dir > 0 ? "→" : "←") : (v.dir > 0 ? "↓" : "↑"))
           : oneWayLot ? (v.horiz ? "↔" : "↕") : "";
         if (arrow) {
-          const a = el("span", "grid-arrow", arrow);
-          a.style.opacity = ".75";
-          a.style.fontSize = "13px";
-          car.appendChild(a);
+          car.appendChild(el("span", "grid-arrow", arrow));
         }
         car.setAttribute("aria-label",
           (i === 0 ? "the vehicle you're freeing" : `vehicle ${i}, length ${v.len}`)
