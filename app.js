@@ -208,6 +208,7 @@ async function startPuzzle(n, isReplay) {
   const meta = metaFor(n);
   $("play-title").textContent = `#${n} · ${meta.title}`;
   $("play-goal").textContent = meta.goal;
+  $("help-back").hidden = true;
   $("replay-flag").hidden = !isReplay;
   $("clock").hidden = true;
 
@@ -218,6 +219,11 @@ async function startPuzzle(n, isReplay) {
   let puzzle;
   try { puzzle = await loadPuzzle(n); }
   catch (err) { return loadError(root, n, err); }
+
+  // The one-line goal is on the topbar; the long version lives behind the ?.
+  $("help-body").innerHTML = puzzle.help
+    ? puzzle.help
+    : `<p>${meta.goal}</p>`;
 
   const engine = puzzle.engine;
   session = { puzzle, isReplay, elapsed: 0, timerId: null };
@@ -302,8 +308,10 @@ function showResult(puzzle, r) {
   $("done-stats").innerHTML = (r.stats || [])
     .map(([label, value]) => `<span><b>${value}</b>${label}</span>`).join("");
 
-  $("done-notes").innerHTML = (r.notes || []).map((n) => `<li>${n}</li>`).join("");
-  $("done-notes").hidden = !(r.notes || []).length;
+  const notes = r.notes || [];
+  $("done-notes").innerHTML = notes.map((n) => `<li>${n}</li>`).join("");
+  $("done-answers").hidden = !notes.length;
+  $("done-answers").open = false;
 
   $("author-note").innerHTML = puzzle.note;
 
@@ -334,6 +342,9 @@ function showResult(puzzle, r) {
 
 /* ---------- nav ------------------------------------------------------------ */
 
+$("play-help").onclick = () => { $("help-back").hidden = false; };
+$("help-close").onclick = () => { $("help-back").hidden = true; };
+$("help-back").onclick = (e) => { if (e.target.id === "help-back") $("help-back").hidden = true; };
 $("play-back").onclick = renderHome;
 $("done-home").onclick = renderHome;
 $("archive-back").onclick = renderHome;

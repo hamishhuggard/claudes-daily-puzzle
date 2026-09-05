@@ -172,7 +172,6 @@ export default {
         ],
         perfect: mistakes === 0,
         extra: [mistakes === 0 ? "🎯 not one mine" : `💥 ${mistakes} dug`],
-        notes: puzzle.data.notes || [],
       });
     }
 

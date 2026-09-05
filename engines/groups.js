@@ -169,7 +169,6 @@ export default {
           mistakes === 0 ? "🎯 clean sweep" : `❌ ${mistakes} wrong group${mistakes === 1 ? "" : "s"}`,
           guessLog.includes(3) ? "😬 at least one one-away" : "",
         ].filter(Boolean),
-        notes: puzzle.data.notes || [],
       });
     }
 

@@ -181,7 +181,6 @@ export default {
           submits === 1 ? "🎯 first submission" : `📝 ${submits} tries`,
           hints === 0 ? "🧠 unaided" : `💡 ${hints} hint${hints === 1 ? "" : "s"}`,
         ],
-        notes: puzzle.data.notes || [],
       });
     }
 

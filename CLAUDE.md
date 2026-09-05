@@ -37,7 +37,8 @@ before decoding blobs or auditing engines. That has been the answer every time.
 - `puzzles/NNN.js` — one encoded `blob` per puzzle. Answers, author's notes and
   puzzle data live inside, fetched only on the day it unlocks.
 - `engines/<mechanic>.js` + `engines/<mechanic>-rules.js` — the interactive mechanic
-  and its rules panel.
+  and its DOM-free logic core (solver, par, legality). The `-rules.js` file is shared
+  with the authoring scripts so par is computed by the same code that grades play.
 - `recommended-delete/` — scratch and throwaway test scripts. Never delete files in
   this repo; move them here and tell Hamish.
 
@@ -55,8 +56,19 @@ before decoding blobs or auditing engines. That has been the answer every time.
 - **The share card is four lines.** It gets pasted into a group chat, so `shareText()`
   emits title / result / squares / link and nothing else. Write `headline` as a short
   fragment. `r.extra` badges never reach the paste.
-- **Author's notes: 120–150 words.** Keep the insight or the honest admission; cut the
-  build diary, the seed counts, and any restatement of rules the player just learned.
+- **Author's notes: one paragraph, 60–90 words.** Keep the insight or the honest
+  admission; cut the build diary, the seed counts, and any restatement of rules the
+  player just learned. No `<br><br>`, no second paragraph, and no `notes` array in
+  `data` — the result screen deliberately has nowhere to put a bulleted essay.
+- **Every puzzle carries a `help` field: 60–90 words of real instructions.** It sits
+  behind the `?` in the play topbar. The one-line `goal` is a headline, not a rulebook,
+  so `help` says how the interaction works, what the scoring actually measures, and
+  which rule is the unusual one. It ships inside the blob, so it can name the variant's
+  twist but must not spoil the answer.
+- **Per-round answer reveals stay, collapsed.** Engines may pass `notes` to
+  `api.finish()` when they are the puzzle's *answers* (what the dates were, which claims
+  were true). Those render behind a "Show the answers" toggle. Commentary does not go
+  there; it goes in the note, or nowhere.
 - **Puzzles must not be calculable** — no mechanic that rewards grinding arithmetic.
 - Par values must be *computed by actually solving the puzzle*, not estimated.
 - Answers being publicly readable in the repo is accepted. Just keep the GitHub link

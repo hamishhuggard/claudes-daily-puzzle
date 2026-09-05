@@ -221,7 +221,6 @@ export default {
           hints === 0 ? "🧠 unaided" : `💡 ${hints} hint${hints === 1 ? "" : "s"}`,
           removals === 0 ? "📐 never redrew one" : `↩️ ${removals} take-back${removals === 1 ? "" : "s"}`,
         ],
-        notes: puzzle.data.notes || [],
       });
     }
 

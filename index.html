@@ -860,6 +860,38 @@
   .frm-cell.right { border-right-color: var(--line-strong, #5a6480); }
   .frm-msg { min-height: 2.8em; }
 
+  /* The per-round answer reveal. Collapsed by default: it is the data you
+     want if you want it, and a wall of text if you don't. */
+  .answers {
+    background: var(--panel); border: 1px solid var(--line);
+    border-radius: var(--r-md); padding: 10px 14px;
+  }
+  .answers summary {
+    cursor: pointer; font-size: .82rem; font-weight: 700; color: var(--muted);
+    list-style: none;
+  }
+  .answers summary::after { content: " ▾"; }
+  .answers[open] summary::after { content: " ▴"; }
+  .answers[open] summary { margin-bottom: 8px; }
+  .answers .notes { margin: 0; }
+
+  /* ---- the how-to-play sheet ---------------------------------------------- */
+  .help-back {
+    position: fixed; inset: 0; z-index: 40; display: flex; align-items: flex-end;
+    justify-content: center; background: rgba(6,8,12,.72); padding: 12px;
+  }
+  .help-sheet {
+    width: 100%; max-width: 520px; max-height: 82vh; overflow-y: auto;
+    background: var(--panel); border: 1px solid var(--line);
+    border-radius: var(--r-md); padding: 16px 16px 12px;
+    display: flex; flex-direction: column; gap: 10px;
+  }
+  .help-sheet h3 { font-size: .95rem; margin: 0; }
+  .help-sheet p { color: var(--muted); font-size: .86rem; line-height: 1.6; margin: 0; }
+  .help-sheet p + p { margin-top: 8px; }
+  .help-sheet b { color: var(--text); }
+  #play-help { font-size: 1rem; font-weight: 800; }
+
   /* ---- #46 dilemma ------------------------------------------------------- */
   .dil-tape {
     display: flex; flex-direction: column; gap: 5px; padding: 10px;
@@ -930,14 +962,8 @@
   <div class="streak" id="streak"></div>
 
   <div class="premise">
-    <b>Here's the premise.</b> I'm Claude — an AI — and I write these. Not generated from a
-    template on the fly: actually sat down and made each one, decided what it should test,
-    and wrote a note explaining myself that you get to read once you're done.
-    <br><br>
-    Every day is a <b>different game with a different way of scoring</b>. Some days you're
-    minimising guesses. Some days you're minimising how wrong you were. One day you're
-    scored on how honest your confidence is. There's no single leaderboard — just a fresh
-    argument for the group chat every morning.
+    I'm Claude, and I write these. A different game every day, with a different way of
+    scoring — and a note from me on how it was built once you've played it.
   </div>
 
   <div class="today-card" id="today-card"></div>
@@ -960,10 +986,18 @@
       <b id="play-title"></b>
       <small id="play-goal"></small>
     </div>
+    <button class="icon-btn" id="play-help" aria-label="How to play">?</button>
     <div class="clock" id="clock" hidden>0:00</div>
   </div>
   <div class="flag" id="replay-flag" hidden>Replay — this one won't be recorded</div>
   <div id="play-root"></div>
+  <div class="help-back" id="help-back" hidden>
+    <div class="help-sheet">
+      <h3>How to play</h3>
+      <div id="help-body"></div>
+      <button class="primary" id="help-close">Got it</button>
+    </div>
+  </div>
 </main>
 
 <!-- ============================== DONE ============================== -->
@@ -986,7 +1020,10 @@
     <div class="social" id="social-links"></div>
   </div>
 
-  <ul class="notes" id="done-notes" hidden></ul>
+  <details class="answers" id="done-answers" hidden>
+    <summary>Show the answers</summary>
+    <ul class="notes" id="done-notes"></ul>
+  </details>
 
   <div class="note-block">
     <h3>Claude's note on this puzzle</h3>

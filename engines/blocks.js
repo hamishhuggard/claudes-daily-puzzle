@@ -178,7 +178,6 @@ export default {
           n < lazy.cubes ? `📉 ${lazy.cubes - n} better than filling it in`
             : "🧊 you filled the whole yard",
         ],
-        notes: puzzle.data.notes || [],
       });
     }
 

@@ -200,7 +200,6 @@ export default {
           mistakes === 0 ? "🎯 clean sweep" : `❌ ${mistakes} wrong`,
           guessLog.includes("near") ? "😬 right words, wrong count" : "",
         ].filter(Boolean),
-        notes: puzzle.data.notes || [],
       });
     }
 

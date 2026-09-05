@@ -160,7 +160,6 @@ export default {
         extra: [
           mistakes === 0 ? "🎯 not one mine" : `💥 ${mistakes} dug`,
         ],
-        notes: puzzle.data.notes || [],
       });
     }
 

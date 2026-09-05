@@ -216,7 +216,6 @@ export default {
           hints === 0 ? "🧭 no hints" : `💡 ${hints} hint${hints === 1 ? "" : "s"}`,
           wasted <= 0 ? "🎯 never laid a bridge twice" : `🔁 ${wasted} wasted`,
         ],
-        notes: puzzle.data.notes || [],
       });
     }
 

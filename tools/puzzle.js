@@ -83,6 +83,7 @@ async function pack(n) {
     if (c[f] == null) throw new Error(`puzzle ${n}: missing "${f}"`);
   }
   const payload = { type: c.type, note: c.note, data: c.data };
+  if (c.help) payload.help = c.help;   // the ? panel, spoiler-free but still hidden until unlock
   const blob = encode(payload, n);
 
   // Sanity: it must survive a round trip before we write anything.

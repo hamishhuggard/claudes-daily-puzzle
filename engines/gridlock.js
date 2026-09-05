@@ -230,7 +230,6 @@ export default {
           overPar === 0 ? "🎯 shortest escape both times" : `🚗 +${overPar} over the shortest route`,
           resets ? `🔁 ${resets} reset${resets === 1 ? "" : "s"}` : "",
         ].filter(Boolean),
-        notes: puzzle.data.notes || [],
       });
     }
 

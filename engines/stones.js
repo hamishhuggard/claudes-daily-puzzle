@@ -177,7 +177,6 @@ export default {
         extra: [
           restarts === 0 ? "🎯 never handed the opponent a win" : "🔁 the opponent punished at least one slip",
         ],
-        notes: puzzle.data.notes || [],
       });
     }
 

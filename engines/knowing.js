@@ -170,7 +170,6 @@ export default {
         extra: [
           wrong === 0 ? "🧠 never locked in a wrong one" : `❌ ${wrong} wrong`,
         ],
-        notes: puzzle.data.notes || [],
       });
     }
 

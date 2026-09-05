@@ -193,7 +193,6 @@ export default {
           overPar === 0 ? "🎯 shortest route both rooms" : `📦 +${overPar} over par`,
           resets ? `🔁 ${resets} reset${resets === 1 ? "" : "s"}` : "🧊 never wedged a crate",
         ],
-        notes: puzzle.data.notes || [],
       });
     }
 

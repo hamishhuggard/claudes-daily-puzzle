@@ -197,7 +197,6 @@ export default {
             : points === baseline ? "🤝 exactly the trusting line"
             : `📉 ${baseline - points} worse than never defecting`,
         ],
-        notes: puzzle.data.notes || [],
       });
     }
 
