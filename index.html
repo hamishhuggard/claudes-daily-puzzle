@@ -796,6 +796,34 @@
   .zeb-clue.liar em { color: var(--bad); }
   .zeb-msg { min-height: 2.6em; }
 
+  /* ---- #49 packing ------------------------------------------------------- */
+  .pk-strip {
+    display: flex; flex-wrap: wrap; justify-content: center; gap: 1px;
+    background: var(--panel); border: 1px solid var(--line);
+    border-radius: var(--r-md); padding: 10px 8px;
+  }
+  .pk-ch {
+    width: 1.05em; text-align: center; font-weight: 800;
+    font-size: min(3.8vw, .95rem); font-family: ui-monospace, monospace;
+    color: var(--text); border-radius: 2px; padding: 2px 0;
+  }
+  /* A letter doing double duty is the whole point, so it is the only thing
+     coloured. */
+  .pk-ch.shared { background: rgba(125,201,138,.28); color: var(--good); }
+  .pk-chips { display: flex; flex-direction: column; gap: 5px; }
+  .pk-chip {
+    display: flex; align-items: baseline; gap: 10px; width: 100%; text-align: left;
+    padding: 8px 11px; color: var(--text);
+    background: var(--panel); border: 1px solid var(--line); border-radius: var(--r-sm);
+  }
+  .pk-chip b { font-size: .84rem; letter-spacing: .5px; font-family: ui-monospace, monospace; }
+  .pk-chip em {
+    margin-left: auto; font-style: normal; font-size: .68rem; font-weight: 700;
+    color: var(--muted);
+  }
+  .pk-chip.sel { border-color: var(--accent); background: rgba(232,130,90,.12); }
+  .pk-msg { min-height: 2.8em; }
+
   /* ---- #48 blocks -------------------------------------------------------- */
   .blk-board {
     display: grid; grid-template-columns: repeat(var(--cols), 1fr); gap: 3px;
