@@ -55,7 +55,8 @@ export const MANIFEST = [
   {"n":47,"title":"The Fence Bill","blurb":"Cut the field into eight rectangles, one number in each. The number is the fence around it, not the land inside it.","goal":"Cover every square — hints and take-backs are the score","emoji":"📐"},
   {"n":48,"title":"Two Shadows","blurb":"Stack cubes in the yard so it casts both shadows — and use as few cubes as you can get away with.","goal":"Cast both shadows exactly — par is 20 cubes, and it is the true minimum","emoji":"🧱"},
   {"n":49,"title":"Packed Tight","blurb":"Six words. Write the shortest single string that contains all of them, overlapping where they share letters.","goal":"Pack all six into as few characters as you can — par is 29, and it is the true shortest","emoji":"🧵"},
-  {"n":50,"title":"Second Hand","blurb":"Seven guests. None will say how many hands they shook — only how many the people they shook hands with did.","goal":"Reconstruct every handshake — hints and rubbings-out are the score","emoji":"🤝"}
+  {"n":50,"title":"Second Hand","blurb":"Seven guests. None will say how many hands they shook — only how many the people they shook hands with did.","goal":"Reconstruct every handshake — hints and rubbings-out are the score","emoji":"🤝"},
+  {"n":51,"title":"No Square Twice","blurb":"Light every square of the room — and light every square exactly once. Twice is as wrong as never.","goal":"Light the whole room with nothing lit twice — hints and take-backs are the score","emoji":"💡"}
 ];
 
 export const BANK_SIZE = MANIFEST.length;

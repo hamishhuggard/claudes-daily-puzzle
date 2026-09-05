@@ -796,6 +796,29 @@
   .zeb-clue.liar em { color: var(--bad); }
   .zeb-msg { min-height: 2.6em; }
 
+  /* ---- #51 lamps --------------------------------------------------------- */
+  .lmp-board {
+    display: grid; grid-template-columns: repeat(var(--cols), 1fr); gap: 2px;
+    background: var(--panel); border: 1px solid var(--line);
+    border-radius: var(--r-md); padding: 6px; max-width: 340px;
+    margin: 0 auto; width: 100%;
+  }
+  .lmp-cell {
+    aspect-ratio: 1; padding: 0; border-radius: 3px;
+    display: flex; align-items: center; justify-content: center;
+    background: #12151d; border: 1px solid #232838; color: var(--muted);
+    font-size: min(3.4vw, .88rem); font-weight: 800; cursor: pointer;
+  }
+  .lmp-cell.wall { background: #39405e; border-color: #39405e; cursor: default; }
+  .lmp-cell.numbered { color: var(--text); }
+  .lmp-cell.numbered.met { color: var(--good); }
+  .lmp-cell.lit { background: rgba(224,190,92,.16); border-color: rgba(224,190,92,.3); }
+  /* Lit twice is the variant's own failure state, so it gets the loud colour. */
+  .lmp-cell.twice { background: rgba(224,106,90,.34); border-color: var(--bad); }
+  .lmp-cell.lamp { background: rgba(224,190,92,.36); border-color: var(--warn, #e0be5c); }
+  .lmp-cell.crossed { color: #4a5268; }
+  .lmp-msg { min-height: 2.8em; }
+
   /* ---- #50 party --------------------------------------------------------- */
   .pty-board {
     position: relative; width: 100%; max-width: 340px; margin: 0 auto;
