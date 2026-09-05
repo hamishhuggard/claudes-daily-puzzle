@@ -956,6 +956,9 @@
     position: fixed; inset: 0; z-index: 40; display: flex; align-items: flex-end;
     justify-content: center; background: rgba(6,8,12,.72); padding: 12px;
   }
+  /* display:flex above outranks the browser's [hidden] rule, so the sheet has
+     to be told to hide explicitly — same reason .clock[hidden] exists. */
+  .help-back[hidden] { display: none; }
   .help-sheet {
     width: 100%; max-width: 520px; max-height: 82vh; overflow-y: auto;
     background: var(--panel); border: 1px solid var(--line);

@@ -112,13 +112,20 @@ function unpack(n) {
   const p = decode(blob, n);
   const meta = readManifest().find((e) => e.n === n) || {};
   fs.mkdirSync(CONTENT, { recursive: true });
+  /* `help` is optional in the payload but it is still content: leaving it out
+     here meant an unpack/pack round trip silently deleted a puzzle's ? panel. */
+  const out = {
+    type: p.type, title: meta.title, blurb: meta.blurb,
+    goal: meta.goal, emoji: meta.emoji, note: p.note,
+  };
+  if (p.help) out.help = p.help;
+  out.data = p.data;
+
   fs.writeFileSync(srcPath(n),
 `/* Puzzle #${n} working copy — edit here, then: node tools/puzzle.js pack ${n} */
 
-export default ${JSON.stringify({
-  type: p.type, title: meta.title, blurb: meta.blurb,
-  goal: meta.goal, emoji: meta.emoji, note: p.note, data: p.data,
-}, (k, v) => (typeof v === "function" ? "fn:" + v.toString() : v), 2)};
+export default ${JSON.stringify(out,
+  (k, v) => (typeof v === "function" ? "fn:" + v.toString() : v), 2)};
 `);
   console.log(`unpacked #${n} -> tools/content/${pad(n)}.js`);
 }
