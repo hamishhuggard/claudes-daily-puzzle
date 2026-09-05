@@ -796,6 +796,31 @@
   .zeb-clue.liar em { color: var(--bad); }
   .zeb-msg { min-height: 2.6em; }
 
+  /* ---- #50 party --------------------------------------------------------- */
+  .pty-board {
+    position: relative; width: 100%; max-width: 340px; margin: 0 auto;
+    aspect-ratio: 1; background: var(--panel); border: 1px solid var(--line);
+    border-radius: var(--r-md);
+  }
+  .pty-lines { position: absolute; inset: 0; width: 100%; height: 100%; }
+  .pty-lines line { stroke: var(--accent); stroke-width: 0.9; stroke-linecap: round; }
+  .pty-guest {
+    position: absolute; transform: translate(-50%, -50%);
+    display: flex; flex-direction: column; align-items: center; gap: 1px;
+    width: 4.9rem; padding: 5px 2px; border-radius: var(--r-sm);
+    background: #12151d; border: 1px solid var(--line); color: var(--text);
+    cursor: pointer;
+  }
+  .pty-guest b { font-size: .7rem; }
+  .pty-guest span { font-size: .74rem; font-weight: 800; font-variant-numeric: tabular-nums; }
+  .pty-guest em { font-style: normal; font-size: .56rem; color: var(--muted); }
+  .pty-guest.ok { border-color: var(--good); background: rgba(125,201,138,.14); }
+  .pty-guest.ok span { color: var(--good); }
+  .pty-guest.over { border-color: var(--bad); }
+  .pty-guest.over span { color: var(--bad); }
+  .pty-guest.sel { outline: 2px solid var(--accent); outline-offset: -2px; }
+  .pty-msg { min-height: 2.8em; }
+
   /* ---- #49 packing ------------------------------------------------------- */
   .pk-strip {
     display: flex; flex-wrap: wrap; justify-content: center; gap: 1px;
