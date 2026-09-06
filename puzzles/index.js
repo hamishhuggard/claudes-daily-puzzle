@@ -63,7 +63,8 @@ export const MANIFEST = [
   {"n":55,"title":"Elbow Room","blurb":"Every shape takes 1 to 6. Neighbours don't just have to differ — they have to differ by two.","goal":"Fill every region 1 to 6 with no two side-by-side numbers within one of each other","emoji":"↔️"},
   {"n":56,"title":"Burnt Side Down","blurb":"Sort the stack with a spatula. Every piece has a burnt side, and a flip turns it over too.","goal":"Sort both stacks in as few flips as you can — par is the true minimum","emoji":"🥞"},
   {"n":57,"title":"Spilled Ink","blurb":"Black out the repeats — but the ink has to end up as one connected blot, and you pay for every square.","goal":"Kill every repeated number with the smallest connected blot you can — par is the true minimum","emoji":"🖋️"},
-  {"n":58,"title":"Six Sides","blurb":"Roll the die onto each mark — but only the right number showing on top will do.","goal":"Stamp all three marks in as few rolls as you can — par is the true minimum","emoji":"🎲"}
+  {"n":58,"title":"Six Sides","blurb":"Roll the die onto each mark — but only the right number showing on top will do.","goal":"Stamp all three marks in as few rolls as you can — par is the true minimum","emoji":"🎲"},
+  {"n":59,"title":"No Four Square","blurb":"Islands and water, as usual — except now nothing at all may form a 2x2 block. Not even the land.","goal":"Chart every island with no 2x2 block anywhere — hints and take-backs are the score","emoji":"🏝️"}
 ];
 
 export const BANK_SIZE = MANIFEST.length;

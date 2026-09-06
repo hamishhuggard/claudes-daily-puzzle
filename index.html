@@ -611,7 +611,7 @@
      those to 30%, which hides exactly the information the puzzle is made of,
      so these opt out and rely on their own colouring instead. */
   .snk-cell:disabled, .prc-cell:disabled, .elb-cell:disabled,
-  .dic-cell:disabled, .blt-cell:disabled { opacity: 1; }
+  .dic-cell:disabled, .blt-cell:disabled, .isl-cell:disabled { opacity: 1; }
 
   /* ---- #36 gridlock ------------------------------------------------------ */
   .grid-board {
@@ -802,6 +802,25 @@
   }
   .zeb-clue.liar em { color: var(--bad); }
   .zeb-msg { min-height: 2.6em; }
+
+  /* ---- #59 isles --------------------------------------------------------- */
+  .isl-board {
+    display: grid; grid-template-columns: repeat(var(--cols), 1fr); gap: 2px;
+    background: var(--panel); border: 1px solid var(--line);
+    border-radius: var(--r-md); padding: 7px; max-width: 320px;
+    margin: 0 auto; width: 100%;
+  }
+  .isl-cell {
+    aspect-ratio: 1; padding: 0; border-radius: 3px;
+    display: flex; align-items: center; justify-content: center;
+    background: #12151d; border: 1px solid #232838; color: #46506a;
+    font-size: min(4vw, .95rem); font-weight: 800; cursor: pointer;
+  }
+  .isl-cell.land { background: #6f8f5a; border-color: #86a86d; color: #14180f; }
+  .isl-cell.water { background: #101722; border-color: #1c2634; color: #3d5570; }
+  .isl-cell.clue { background: #86a86d; border-color: #a6c78c; color: #12170d; cursor: default; }
+  .isl-cell.block { outline: 2px solid var(--bad); outline-offset: -2px; }
+  .isl-msg { min-height: 2.8em; }
 
   /* ---- #58 dice ---------------------------------------------------------- */
   .dic-board {
