@@ -64,7 +64,8 @@ export const MANIFEST = [
   {"n":56,"title":"Burnt Side Down","blurb":"Sort the stack with a spatula. Every piece has a burnt side, and a flip turns it over too.","goal":"Sort both stacks in as few flips as you can — par is the true minimum","emoji":"🥞"},
   {"n":57,"title":"Spilled Ink","blurb":"Black out the repeats — but the ink has to end up as one connected blot, and you pay for every square.","goal":"Kill every repeated number with the smallest connected blot you can — par is the true minimum","emoji":"🖋️"},
   {"n":58,"title":"Six Sides","blurb":"Roll the die onto each mark — but only the right number showing on top will do.","goal":"Stamp all three marks in as few rolls as you can — par is the true minimum","emoji":"🎲"},
-  {"n":59,"title":"No Four Square","blurb":"Islands and water, as usual — except now nothing at all may form a 2x2 block. Not even the land.","goal":"Chart every island with no 2x2 block anywhere — hints and take-backs are the score","emoji":"🏝️"}
+  {"n":59,"title":"No Four Square","blurb":"Islands and water, as usual — except now nothing at all may form a 2x2 block. Not even the land.","goal":"Chart every island with no 2x2 block anywhere — hints and take-backs are the score","emoji":"🏝️"},
+  {"n":60,"title":"One at the Oars","blurb":"Six to get across, a boat that holds two — and nobody may row two crossings in a row.","goal":"Get all six across in as few crossings as you can — par is the true minimum","emoji":"🚣"}
 ];
 
 export const BANK_SIZE = MANIFEST.length;

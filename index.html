@@ -803,6 +803,33 @@
   .zeb-clue.liar em { color: var(--bad); }
   .zeb-msg { min-height: 2.6em; }
 
+  /* ---- #60 ferry --------------------------------------------------------- */
+  .fry-bank, .fry-boat {
+    background: var(--panel); border: 1px solid var(--line);
+    border-radius: var(--r-md); padding: 8px 10px;
+  }
+  /* The bank the boat is at is the one you can act on, so it is the one lit. */
+  .fry-bank.hasboat { border-color: #3f4a63; }
+  .fry-boat { background: #131922; border-style: dashed; }
+  .fry-banklabel {
+    font-size: .6rem; color: var(--faint); text-transform: uppercase;
+    letter-spacing: 1.1px; font-weight: 800; margin-bottom: 6px;
+  }
+  .fry-people { display: flex; flex-wrap: wrap; gap: 5px; }
+  .fry-person {
+    padding: 6px 9px; border-radius: 999px; font-size: .78rem; font-weight: 700;
+    background: #12151d; border: 1px solid #2b3244; color: var(--text); cursor: pointer;
+  }
+  .fry-person.rower { border-color: #5c7fbf; }
+  .fry-person.tired { color: var(--faint); border-color: #2b3244; }
+  .fry-person.aboard { background: #23304a; border-color: #5c7fbf; }
+  .fry-person:disabled { opacity: .45; cursor: default; }
+  .fry-empty { color: var(--faint); font-size: .78rem; }
+  .fry-go { display: flex; gap: 6px; justify-content: center; flex-wrap: wrap; }
+  .fry-note { color: var(--muted); font-size: .78rem; text-align: center; }
+  .fry-feuds { font-size: .74rem; }
+  .fry-msg { min-height: 2.4em; }
+
   /* ---- #59 isles --------------------------------------------------------- */
   .isl-board {
     display: grid; grid-template-columns: repeat(var(--cols), 1fr); gap: 2px;
