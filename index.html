@@ -796,6 +796,49 @@
   .zeb-clue.liar em { color: var(--bad); }
   .zeb-msg { min-height: 2.6em; }
 
+  /* ---- #53 parcels ------------------------------------------------------- */
+  .prc-board {
+    display: grid; grid-template-columns: repeat(var(--cols), 1fr); gap: 2px;
+    background: var(--panel); border: 1px solid var(--line);
+    border-radius: var(--r-md); padding: 6px; max-width: 320px;
+    margin: 0 auto; width: 100%;
+  }
+  .prc-cell {
+    aspect-ratio: 1; padding: 0; border-radius: 3px;
+    display: flex; align-items: center; justify-content: center;
+    background: #12151d; border: 1px solid #232838; color: var(--text);
+    font-size: min(4vw, 1rem); font-weight: 800; cursor: pointer;
+  }
+  /* A given is the same colour as the region it names, ringed so it reads as
+     fixed rather than as something the player painted. */
+  .prc-cell.given { box-shadow: inset 0 0 0 2px var(--text); cursor: default; }
+  .prc-cell.split { outline: 2px solid var(--bad); outline-offset: -2px; }
+  .prc-palette {
+    display: grid; grid-template-columns: repeat(8, 1fr); gap: 4px;
+    max-width: 320px; margin: 0 auto; width: 100%;
+  }
+  .prc-chip {
+    padding: 5px 0; border-radius: 5px; cursor: pointer;
+    border: 1px solid #232838; background: #12151d; color: var(--text);
+    display: flex; flex-direction: column; align-items: center; gap: 1px;
+  }
+  .prc-chip b { font-size: .9rem; font-weight: 800; }
+  .prc-chip small { font-size: .55rem; color: var(--faint); font-variant-numeric: tabular-nums; }
+  .prc-chip.on { outline: 2px solid var(--text); outline-offset: 1px; }
+  .prc-chip.full small { color: var(--good); }
+  .prc-chip.over small { color: var(--bad); }
+  /* Eight regions need eight tellable-apart fills, kept dim enough that the
+     number on top stays the thing you read. */
+  .p1 { background: rgba(224,190,92,.34);  border-color: rgba(224,190,92,.55); }
+  .p2 { background: rgba(125,201,138,.34); border-color: rgba(125,201,138,.55); }
+  .p3 { background: rgba(122,162,247,.34); border-color: rgba(122,162,247,.55); }
+  .p4 { background: rgba(224,106,90,.34);  border-color: rgba(224,106,90,.55); }
+  .p5 { background: rgba(187,134,232,.34); border-color: rgba(187,134,232,.55); }
+  .p6 { background: rgba(92,196,204,.34);  border-color: rgba(92,196,204,.55); }
+  .p7 { background: rgba(232,148,96,.34);  border-color: rgba(232,148,96,.55); }
+  .p8 { background: rgba(150,160,190,.34); border-color: rgba(150,160,190,.55); }
+  .prc-msg { min-height: 2.8em; }
+
   /* ---- #52 snakes -------------------------------------------------------- */
   .snk-board {
     display: grid; grid-template-columns: repeat(var(--cols), 1fr); gap: 2px;
@@ -819,10 +862,18 @@
   }
   /* The two snakes have to be told apart at a glance, so they get hue rather
      than shade — the clue numbers never say which snake a square belongs to. */
-  .snk-cell.s0 { background: rgba(125,201,138,.42); border-color: var(--good); }
-  .snk-cell.s1 { background: rgba(122,162,247,.42); border-color: #7aa2f7; }
+  .snk-cell.s0 { background: rgba(125,201,138,.55); border-color: var(--good); }
+  .snk-cell.s1 { background: rgba(122,162,247,.55); border-color: #7aa2f7; }
   .snk-cell.out { color: #4a5268; }
-  .snk-cell.end { box-shadow: inset 0 0 0 2px var(--text); cursor: default; }
+  /* The four given ends are the only fixed points on the board, so they need
+     to read as given at a glance rather than as squares someone painted. */
+  .snk-cell.end {
+    box-shadow: inset 0 0 0 2px var(--bg, #0f1116), inset 0 0 0 4px currentColor;
+    cursor: default; color: var(--text);
+  }
+  .snk-cell.end::after {
+    content: ""; width: 34%; height: 34%; border-radius: 50%; background: var(--text);
+  }
   .snk-cell.clash { background: rgba(224,106,90,.42); border-color: var(--bad); }
   .snk-msg { min-height: 2.8em; }
 

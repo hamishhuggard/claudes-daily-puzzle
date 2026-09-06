@@ -185,8 +185,8 @@ export default {
         : message || (bad.size
           ? "<b>Two squares are touching that shouldn't.</b> Different snakes never "
             + "touch at all; a snake meets itself only along its own body."
-          : "Tap once for the first snake, again for the second, again to rule "
-            + "the square out. The numbers count both snakes together.");
+          : "Tap once to rule a square out, again for the first snake, again for "
+            + "the second. The numbers count both snakes together.");
       wrap.appendChild(msg);
 
       const bar = el("div", "fairy-bar grid-bar");
