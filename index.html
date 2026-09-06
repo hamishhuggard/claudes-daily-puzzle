@@ -796,6 +796,36 @@
   .zeb-clue.liar em { color: var(--bad); }
   .zeb-msg { min-height: 2.6em; }
 
+  /* ---- #56 flip ---------------------------------------------------------- */
+  .flp-stack {
+    display: flex; flex-direction: column; gap: 5px; align-items: center;
+    background: var(--panel); border: 1px solid var(--line);
+    border-radius: var(--r-md); padding: 12px 10px; max-width: 340px;
+    margin: 0 auto; width: 100%;
+  }
+  .flp-row {
+    width: 100%; background: none; border: 0; padding: 0; cursor: pointer;
+    display: flex; justify-content: center;
+  }
+  .flp-bar {
+    width: var(--w); height: 30px; border-radius: 15px;
+    display: flex; align-items: center; justify-content: center;
+    color: #2a1d0e; font-weight: 800; font-size: .8rem;
+    border: 1px solid #b9833f;
+    /* The burnt side is drawn where it actually is — a dark crust along the
+       bottom when it is face down, along the top when it is showing — so a
+       finished stack has no dark edge anywhere along its top. A thin inset
+       shadow was technically correct and impossible to see; a third of the
+       piece is not. */
+    background: linear-gradient(to bottom, #d9a05b 66%, #3a2811 66%);
+  }
+  .flp-row.burnt .flp-bar {
+    background: linear-gradient(to bottom, #3a2811 34%, #d9a05b 34%);
+    border-color: #6b4a22; color: #f0d9b5;
+  }
+  .flp-row:hover .flp-bar { filter: brightness(1.08); }
+  .flp-msg { min-height: 2.8em; }
+
   /* ---- #55 elbow --------------------------------------------------------- */
   .elb-board {
     display: grid; grid-template-columns: repeat(var(--cols), 1fr); gap: 0;

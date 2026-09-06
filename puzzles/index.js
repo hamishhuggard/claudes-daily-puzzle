@@ -60,7 +60,8 @@ export const MANIFEST = [
   {"n":52,"title":"Company","blurb":"Two snakes are hidden in the grid. The numbers count both of them at once, and never say which is which.","goal":"Find both snakes — hints and take-backs are the score","emoji":"🐍"},
   {"n":53,"title":"No Two Alike","blurb":"Cut the field into regions — and make every single one a different size.","goal":"Carve the whole field with no two regions the same size — hints and repaints are the score","emoji":"📐"},
   {"n":54,"title":"One More Letter","blurb":"Grow a small word into a big one. Every step adds a letter — and you may shuffle the rest.","goal":"Climb both staircases — wrong guesses and hints are the score","emoji":"🪜"},
-  {"n":55,"title":"Elbow Room","blurb":"Every shape takes 1 to 6. Neighbours don't just have to differ — they have to differ by two.","goal":"Fill every region 1 to 6 with no two side-by-side numbers within one of each other","emoji":"↔️"}
+  {"n":55,"title":"Elbow Room","blurb":"Every shape takes 1 to 6. Neighbours don't just have to differ — they have to differ by two.","goal":"Fill every region 1 to 6 with no two side-by-side numbers within one of each other","emoji":"↔️"},
+  {"n":56,"title":"Burnt Side Down","blurb":"Sort the stack with a spatula. Every piece has a burnt side, and a flip turns it over too.","goal":"Sort both stacks in as few flips as you can — par is the true minimum","emoji":"🥞"}
 ];
 
 export const BANK_SIZE = MANIFEST.length;
