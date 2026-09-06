@@ -796,6 +796,25 @@
   .zeb-clue.liar em { color: var(--bad); }
   .zeb-msg { min-height: 2.6em; }
 
+  /* ---- #57 blot ---------------------------------------------------------- */
+  .blt-board {
+    display: grid; grid-template-columns: repeat(var(--cols), 1fr); gap: 3px;
+    background: var(--panel); border: 1px solid var(--line);
+    border-radius: var(--r-md); padding: 8px; max-width: 300px;
+    margin: 0 auto; width: 100%;
+  }
+  .blt-cell {
+    aspect-ratio: 1; padding: 0; border-radius: 4px;
+    display: flex; align-items: center; justify-content: center;
+    background: #1a1f2b; border: 1px solid #2b3244; color: var(--text);
+    font-size: min(4.4vw, 1.05rem); font-weight: 800; cursor: pointer;
+  }
+  /* Inked squares are the answer being drawn, so they read as one dark shape
+     rather than as individually marked cells. */
+  .blt-cell.inked { background: #05070b; border-color: #05070b; color: #333a4d; }
+  .blt-cell.repeat { background: rgba(224,106,90,.28); border-color: var(--bad); }
+  .blt-msg { min-height: 2.8em; }
+
   /* ---- #56 flip ---------------------------------------------------------- */
   .flp-stack {
     display: flex; flex-direction: column; gap: 5px; align-items: center;
