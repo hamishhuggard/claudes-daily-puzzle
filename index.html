@@ -606,6 +606,13 @@
   .grid-score-cell b { font-size: 1.1rem; font-variant-numeric: tabular-nums; }
   .grid-bar { display: flex; justify-content: center; gap: 8px; flex-wrap: wrap; }
 
+  /* Grid engines use disabled buttons for squares you cannot click — givens,
+     walls, marks, the die's own square. The global button:disabled rule dims
+     those to 30%, which hides exactly the information the puzzle is made of,
+     so these opt out and rely on their own colouring instead. */
+  .snk-cell:disabled, .prc-cell:disabled, .elb-cell:disabled,
+  .dic-cell:disabled, .blt-cell:disabled { opacity: 1; }
+
   /* ---- #36 gridlock ------------------------------------------------------ */
   .grid-board {
     display: grid; grid-template-columns: repeat(var(--n), 1fr) 16px;
@@ -795,6 +802,42 @@
   }
   .zeb-clue.liar em { color: var(--bad); }
   .zeb-msg { min-height: 2.6em; }
+
+  /* ---- #58 dice ---------------------------------------------------------- */
+  .dic-board {
+    display: grid; grid-template-columns: repeat(var(--cols), 1fr); gap: 4px;
+    background: var(--panel); border: 1px solid var(--line);
+    border-radius: var(--r-md); padding: 8px; max-width: 300px;
+    margin: 0 auto; width: 100%;
+  }
+  .dic-cell {
+    position: relative; aspect-ratio: 1; padding: 0; border-radius: 5px;
+    display: flex; align-items: center; justify-content: center;
+    background: #12151d; border: 1px solid #232838; color: var(--muted);
+    font-size: min(4vw, .95rem); font-weight: 800;
+  }
+  .dic-cell.wall { background: #39405e; border-color: #39405e; }
+  /* A mark is a target, not a wall: ringed so it reads as somewhere to get to,
+     and filled once it has been stamped with the right face. */
+  .dic-cell.mark { border-color: var(--warn, #e0be5c); color: var(--warn, #e0be5c); }
+  .dic-cell.mark.done { background: rgba(125,201,138,.28); border-color: var(--good); color: var(--good); }
+  .dic-cell.reach { cursor: pointer; border-color: #4a5470; background: #171c27; }
+  .dic-cell.reach:hover { background: #1e2534; }
+  .dic-die {
+    position: absolute; inset: 8%; border-radius: 5px;
+    background: #f0ece2; color: #16181f;
+    display: flex; align-items: center; justify-content: center;
+    font-size: min(5vw, 1.15rem); font-weight: 800;
+  }
+  /* The two side faces are shown small, the way a real die on a table lets you
+     see three faces at once — planning a route needs them. */
+  .dic-die i {
+    position: absolute; font-style: normal; font-size: min(3vw, .6rem);
+    font-weight: 800; color: #6f6a5e;
+  }
+  .dic-die .dic-n { top: 1px; left: 50%; transform: translateX(-50%); }
+  .dic-die .dic-e { right: 2px; top: 50%; transform: translateY(-50%); }
+  .dic-msg { min-height: 2.8em; }
 
   /* ---- #57 blot ---------------------------------------------------------- */
   .blt-board {
