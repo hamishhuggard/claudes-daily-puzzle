@@ -796,6 +796,41 @@
   .zeb-clue.liar em { color: var(--bad); }
   .zeb-msg { min-height: 2.6em; }
 
+  /* ---- #54 staircase ----------------------------------------------------- */
+  .stc-goal {
+    display: flex; align-items: center; justify-content: center; gap: 10px;
+    background: var(--panel); border: 1px solid var(--line);
+    border-radius: var(--r-md); padding: 10px;
+  }
+  .stc-goal span { font-size: 1.05rem; font-weight: 800; letter-spacing: 1.5px; }
+  .stc-goal small { color: var(--faint); font-size: .62rem; text-transform: uppercase; letter-spacing: 1.1px; font-weight: 700; }
+  .stc-steps { display: flex; flex-direction: column; gap: 4px; align-items: center; }
+  .stc-step {
+    display: flex; align-items: center; gap: 8px; width: 100%; max-width: 300px;
+    padding: 7px 10px; border-radius: 6px;
+    background: #12151d; border: 1px solid #232838;
+  }
+  .stc-step.now { border-color: var(--good); background: rgba(125,201,138,.14); }
+  /* Rungs still to climb, so the shape of the whole staircase is visible from
+     the first move rather than appearing one line at a time. */
+  .stc-step.blank { opacity: .38; border-style: dashed; }
+  .stc-word { flex: 1; font-weight: 800; letter-spacing: 2px; font-size: .95rem; }
+  .stc-len { color: var(--faint); font-size: .7rem; font-variant-numeric: tabular-nums; }
+  .stc-form { display: flex; gap: 6px; justify-content: center; }
+  .stc-input {
+    flex: 1; max-width: 210px; background: #12151d; color: var(--text);
+    border: 1px solid #2b303c; border-radius: 8px; padding: 9px 11px;
+    font: inherit; font-weight: 700; letter-spacing: 2px; text-transform: uppercase;
+  }
+  .stc-msg { min-height: 2.8em; }
+  .stc-msg.bad { color: var(--bad); }
+  .stc-done {
+    background: var(--panel); border: 1px solid var(--line);
+    border-radius: var(--r-md); padding: 10px 12px;
+  }
+  .stc-done-head { font-size: .68rem; color: var(--faint); text-transform: uppercase; letter-spacing: 1.1px; font-weight: 800; }
+  .stc-done-path { margin-top: 4px; font-weight: 700; letter-spacing: 1px; font-size: .82rem; }
+
   /* ---- #53 parcels ------------------------------------------------------- */
   .prc-board {
     display: grid; grid-template-columns: repeat(var(--cols), 1fr); gap: 2px;

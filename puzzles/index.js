@@ -58,7 +58,8 @@ export const MANIFEST = [
   {"n":50,"title":"Second Hand","blurb":"Seven guests. None will say how many hands they shook — only how many the people they shook hands with did.","goal":"Reconstruct every handshake — hints and rubbings-out are the score","emoji":"🤝"},
   {"n":51,"title":"No Square Twice","blurb":"Light every square of the room — and light every square exactly once. Twice is as wrong as never.","goal":"Light the whole room with nothing lit twice — hints and take-backs are the score","emoji":"💡"},
   {"n":52,"title":"Company","blurb":"Two snakes are hidden in the grid. The numbers count both of them at once, and never say which is which.","goal":"Find both snakes — hints and take-backs are the score","emoji":"🐍"},
-  {"n":53,"title":"No Two Alike","blurb":"Cut the field into regions — and make every single one a different size.","goal":"Carve the whole field with no two regions the same size — hints and repaints are the score","emoji":"📐"}
+  {"n":53,"title":"No Two Alike","blurb":"Cut the field into regions — and make every single one a different size.","goal":"Carve the whole field with no two regions the same size — hints and repaints are the score","emoji":"📐"},
+  {"n":54,"title":"One More Letter","blurb":"Grow a small word into a big one. Every step adds a letter — and you may shuffle the rest.","goal":"Climb both staircases — wrong guesses and hints are the score","emoji":"🪜"}
 ];
 
 export const BANK_SIZE = MANIFEST.length;
