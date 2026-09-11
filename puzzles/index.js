@@ -65,7 +65,11 @@ export const MANIFEST = [
   {"n":57,"title":"Spilled Ink","blurb":"Black out the repeats — but the ink has to end up as one connected blot, and you pay for every square.","goal":"Kill every repeated number with the smallest connected blot you can — par is the true minimum","emoji":"🖋️"},
   {"n":58,"title":"Six Sides","blurb":"Roll the die onto each mark — but only the right number showing on top will do.","goal":"Stamp all three marks in as few rolls as you can — par is the true minimum","emoji":"🎲"},
   {"n":59,"title":"No Four Square","blurb":"Islands and water, as usual — except now nothing at all may form a 2x2 block. Not even the land.","goal":"Chart every island with no 2x2 block anywhere — hints and take-backs are the score","emoji":"🏝️"},
-  {"n":60,"title":"One at the Oars","blurb":"Six to get across, a boat that holds two — and nobody may row two crossings in a row.","goal":"Get all six across in as few crossings as you can — par is the true minimum","emoji":"🚣"}
+  {"n":60,"title":"One at the Oars","blurb":"Six to get across, a boat that holds two — and nobody may row two crossings in a row.","goal":"Get all six across in as few crossings as you can — par is the true minimum","emoji":"🚣"},
+  {"n":61,"title":"Open Water","blurb":"Pearls in the water, and one line threading them — but it never closes.","goal":"Draw both lines anchor to anchor — hints and wrong finishes are the score","emoji":"🫧"},
+  {"n":62,"title":"The Loop Line","blurb":"Re-sort a train through three sidings before it can leave the yard.","goal":"Send every wagon out in the target order, in as few moves as the sidings allow.","emoji":"🚂"},
+  {"n":63,"title":"The Double Blank","blurb":"Cut a grid of digits into a full domino set — except one piece was laid twice and one never got laid at all.","goal":"Dissect the grid into dominoes, then name the piece that's doubled and the piece that's missing","emoji":"🀄"},
+  {"n":65,"title":"Uneven Skies","blurb":"Star Battle with the one rule that makes it easy taken away — regions no longer match the rows.","goal":"Place two stars in every row and column, none touching, matching each region's own printed count","emoji":"⭐"}
 ];
 
 export const BANK_SIZE = MANIFEST.length;
