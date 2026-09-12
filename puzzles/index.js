@@ -70,7 +70,21 @@ export const MANIFEST = [
   {"n":62,"title":"The Loop Line","blurb":"Re-sort a train through three sidings before it can leave the yard.","goal":"Send every wagon out in the target order, in as few moves as the sidings allow.","emoji":"🚂"},
   {"n":63,"title":"The Double Blank","blurb":"Cut a grid of digits into a full domino set — except one piece was laid twice and one never got laid at all.","goal":"Dissect the grid into dominoes, then name the piece that's doubled and the piece that's missing","emoji":"🀄"},
   {"n":64,"title":"One Bad Answer","blurb":"Six racehorses, a hidden finish order, and a steward who answers every question truthfully except one — and won't say which.","goal":"Name the finish order and the lying pair in as few questions as the honest par needs","emoji":"🐎"},
-  {"n":65,"title":"Uneven Skies","blurb":"Star Battle with the one rule that makes it easy taken away — regions no longer match the rows.","goal":"Place two stars in every row and column, none touching, matching each region's own printed count","emoji":"⭐"}
+  {"n":65,"title":"Uneven Skies","blurb":"Star Battle with the one rule that makes it easy taken away — regions no longer match the rows.","goal":"Place two stars in every row and column, none touching, matching each region's own printed count","emoji":"⭐"},
+  {"n":66,"title":"Split the Difference","blurb":"Build rotational galaxies whose areas are all different.","goal":"Partition the board into rotationally balanced galaxies of different sizes","emoji":"🌌"},
+  {"n":67,"title":"Angle of Incidence","blurb":"Route one beam through exact mirror supplies and make it cross itself the printed number of times.","goal":"Place every mirror, hit the target port, and make exactly the printed number of crossings","emoji":"🪞"},
+  {"n":68,"title":"Half Measures","blurb":"Fill triangles while every clue counts all eight neighbours.","goal":"Place triangles so every clue matches and each white area is a rectangle","emoji":"🔺"},
+  {"n":69,"title":"Low Tide","blurb":"Fill irregular tubs from one absolute level, with two piped tubs tied together.","goal":"Match every row's water count while piped tubs share the same waterline","emoji":"🫧"},
+  {"n":70,"title":"Struck Off","blurb":"Cross out the repeats, but every row tells you exactly how many marks it can take.","goal":"Shade the legal cells in every grid","emoji":"✂️"},
+  {"n":71,"title":"Grow Your Own","blurb":"Grow every numbered patch to its size, then make every size on the board different.","goal":"Complete every region with a unique size","emoji":"🌱"},
+  {"n":72,"title":"Level Crossing","blurb":"Join every pair, fill the board, and let marked junctions carry two paths through one square.","goal":"Complete every path and use every marked crossing","emoji":"🚦"},
+  {"n":73,"title":"The Long Thaw","blurb":"Fill the thermometers from their bulbs—and find the one loop that has no bulb at all.","goal":"Match every row and column thaw count","emoji":"🌡️"},
+  {"n":74,"title":"Two Across, Three Down","blurb":"Shade the rooms while horizontal runs get two borders and vertical runs get three.","goal":"Shade both rooms legally","emoji":"▦"},
+  {"n":75,"title":"Fixed in Place","blurb":"Five stone figures, one park. Their orientations are already fixed.","goal":"Place every pentomino exactly once without covering a pond","emoji":"🗿"},
+  {"n":76,"title":"Two Short Steps","blurb":"Visit every square from corner to corner. Two moves may bend short.","goal":"Tour every square from endpoint to endpoint with exactly two king moves","emoji":"♞"},
+  {"n":77,"title":"Looking Out","blurb":"Mark the outside of the cave. The clues count what they can see.","goal":"Separate one connected outside from one connected cave with a single shore loop","emoji":"🌊"},
+  {"n":78,"title":"Pairs and Spares","blurb":"Shade dominoes, but every region keeps its own budget.","goal":"Shade legal dominoes so every printed regional count is exact","emoji":"⬛"},
+  {"n":79,"title":"One Loop Allowed","blurb":"Every square gets a diagonal. This time, one loop is the answer.","goal":"Draw all diagonals, satisfy every corner count, and make exactly one loop","emoji":"〰️"}
 ];
 
 export const BANK_SIZE = MANIFEST.length;

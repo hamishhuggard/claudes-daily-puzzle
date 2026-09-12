@@ -1,0 +1,1 @@
+import {blob} from "../puzzles/072.js";import{decode}from"../codec.js";import{countSolutions,check}from"../engines/crossing-rules.js";const content=decode(blob,72);for(const r of content.data.rounds){const x=countSolutions(r.spec,2);if(x.count!==1||!check(r.spec,x.solutions[0]).ok)throw Error("#72 failed")}console.log("#72 packed playthrough OK");

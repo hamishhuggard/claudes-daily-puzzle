@@ -1,0 +1,1 @@
+import {blob} from "../puzzles/073.js";import{decode}from"../codec.js";import{countSolutions,check}from"../engines/thermo-rules.js";const content=decode(blob,73);for(const r of content.data.rounds){const x=countSolutions(r.spec,2);if(x.count!==1||!check(r.spec,x.solutions[0]).ok)throw Error("#73 failed")}console.log("#73 packed playthrough OK");

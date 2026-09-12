@@ -1,0 +1,1 @@
+import {blob} from "../puzzles/074.js";import{decode}from"../codec.js";import{countSolutions,check}from"../engines/heyawake-rules.js";const content=decode(blob,74);for(const r of content.data.rounds){const x=countSolutions(r.spec,2);if(x.count!==1||!check(r.spec,x.solutions[0]).ok)throw Error("#74 failed")}console.log("#74 packed playthrough OK");

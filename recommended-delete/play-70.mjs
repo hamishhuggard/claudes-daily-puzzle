@@ -1,0 +1,1 @@
+import {blob} from "../puzzles/070.js";import{decode}from"../codec.js";import{countSolutions,check}from"../engines/hitori-rules.js";const content=decode(blob,70);for(const r of content.data.rounds){const x=countSolutions(r.spec,2);if(x.count!==1||!x.exhausted||!check(r.spec,x.solutions[0]).ok)throw Error("#70 failed")}console.log("#70 packed playthrough OK");
